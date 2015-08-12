@@ -434,13 +434,7 @@ int nMode = 0;
         NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGRect rect = cell.ScoreItem.frame;
         rect.size.height = [self getLabelHeight:indexPath];
-         if (iOS8)
-        {
-            [cell.ScoreItem setFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
-        } else if (iOS7) {
-            [cell.ScoreItem setFrame:rect];
-        }
-        
+        [cell.ScoreItem setFrame:rect];        
         
         [cell.ScoreItem setText:content];
         //

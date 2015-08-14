@@ -74,11 +74,17 @@
     NSString *sMode = [NSString stringWithFormat:@"%d",nSelect];
     if ([self isPureFloat:step] || [self isPureInt:step]) {
         
+        if ([step floatValue] == 0.0 || [step floatValue] > 100.0) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"输入范围错误" message:@"请输入0.1-100范围内的数字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        } else
+        {
         [defaults setObject:step forKey:@"Step"];
         [defaults setObject:sMode forKey:@"Mode"];
         [defaults synchronize];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updateSet" object:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
+        }
         
     } else {
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"格式错误" message:@"请输入正确的数字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];

@@ -59,7 +59,7 @@ int nMode = 0;
     
     bScore = YES;
     self.tableView.rowHeight = 60;
-    _comView = [[ComboxView alloc] initWithFrame:CGRectMake(412, 140, 490, 100)];
+    _comView = [[ComboxView alloc] initWithFrame:CGRectMake(140, 140, 490, 100)];
     [self.view addSubview:_comView];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:@"closeView" object:nil];
@@ -78,6 +78,7 @@ int nMode = 0;
     for (Student * obj in appDelegate.gStudnetArray) {
         if ([obj.U_ID isEqualToString:appDelegate.gStudentId]) {
             [[self StudentNo] setText:obj.EStu_ExamNumber];//确认到底是学生号码还是考试号码
+            [[self txtName] setText:[obj.U_TrueName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             break;
         }
     }
@@ -446,7 +447,8 @@ int nMode = 0;
         if (item.rating_value != nil) {
             cell.Rating.value = [item.rating_value floatValue];
             cell.FinalScore.text = item.Item_Score;
-            [cell.FinalScore setTextColor:[UIColor blueColor]];
+            //[cell.FinalScore setTextColor:[UIColor blueColor]];
+            [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
             [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
             cell.stepValue.value = [item.step_value doubleValue];
         }else {
@@ -520,7 +522,8 @@ int nMode = 0;
     item.Item_Score = [NSString stringWithFormat:@"%.1f", floorf(nValue)*stepValue];
     item.step_value = [NSString stringWithFormat:@"%.f", nValue];
     [cell.FinalScore setText:[NSString stringWithFormat:@"%.1f", floorf(nValue)*stepValue]];
-    [cell.FinalScore setTextColor:[UIColor blueColor]];
+    //[cell.FinalScore setTextColor:[UIColor blueColor]];
+    [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
 }
 
@@ -545,7 +548,8 @@ int nMode = 0;
     item.Item_Score = [NSString stringWithFormat:@"%.1f", floorf(nValue)*stepValue];
     item.step_value = [NSString stringWithFormat:@"%.f", nValue];
     [cell.FinalScore setText:[NSString stringWithFormat:@"%.1f", floorf(nValue)*stepValue]];
-    [cell.FinalScore setTextColor:[UIColor blueColor]];
+    //[cell.FinalScore setTextColor:[UIColor blueColor]];
+    [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
 }
 
@@ -566,7 +570,8 @@ int nMode = 0;
     item.Item_Score = [NSString stringWithFormat:@"%.1f", sender.value*stepValue];
     item.step_value = [NSString stringWithFormat:@"%.f", sender.value];
     [cell.FinalScore setText:[NSString stringWithFormat:@"%.1f", sender.value*stepValue]];
-    [cell.FinalScore setTextColor:[UIColor blueColor]];
+    //[cell.FinalScore setTextColor:[UIColor blueColor]];
+    [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
 }
 

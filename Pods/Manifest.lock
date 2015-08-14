@@ -1,0 +1,31 @@
+PODS:
+  - CustomIOSAlertView (0.9.3)
+  - FLAnimatedImage (1.0.8)
+  - MBProgressHUD (0.9.1)
+  - PINCache (2.0)
+  - PINRemoteImage (1.0):
+    - FLAnimatedImage (>= 1.0)
+    - PINCache (>= 2.0)
+  - RMMapper (1.1.5)
+  - SWTableViewCell (0.3.7)
+  - TPKeyboardAvoiding (1.2.9)
+
+DEPENDENCIES:
+  - CustomIOSAlertView
+  - MBProgressHUD
+  - PINRemoteImage
+  - RMMapper
+  - SWTableViewCell
+  - TPKeyboardAvoiding
+
+SPEC CHECKSUMS:
+  CustomIOSAlertView: 94d2401e34fcfb0ac0134679d6947f5e251b0446
+  FLAnimatedImage: f9422f796135aff80d8c00b2afc48015bb746e24
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  PINCache: ca953ba93ce1edde056fdd99121ee65b295a08c9
+  PINRemoteImage: dd0126a7dd6f00191199ac090cb8c914049812f3
+  RMMapper: 21122d753c736d975f6c61e674afce8db73579af
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
+  TPKeyboardAvoiding: ff1ee4e5a5a0c119b965552af8f183868ea20207
+
+COCOAPODS: 0.38.0

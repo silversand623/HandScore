@@ -14,7 +14,7 @@
 #import "LoginInfoType.h"
 #import "TYAppDelegate.h"
 #import "MBProgressHUD.h"
-#import "CustomIOS7AlertView.h"
+#import "CustomIOSAlertView.h"
 
 @implementation LoginViewController
 

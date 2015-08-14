@@ -41,7 +41,7 @@
     } else {
         [[self scoreMode] setSelectedSegmentIndex:0];
     }
-    
+    self.txtStep.delegate = self;
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,4 +95,38 @@
 - (IBAction)exitSetting:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    
+    NSMutableString * futureString = [NSMutableString stringWithString:textField.text];
+    
+    [futureString  insertString:string atIndex:range.location];
+    
+    NSInteger flag=0;
+    
+    const NSInteger limited = 1;//小数点后需要限制的个数
+    
+    for (int i = futureString.length-1; i>=0; i--) {
+        
+        if ([futureString characterAtIndex:i] == '.') {
+
+            if (flag > limited) {
+                
+                return NO;
+            }
+            
+            
+            break;
+        }
+        
+        flag++;
+        
+    }
+
+    return YES;
+    
+    
+}
+
 @end

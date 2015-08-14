@@ -10,7 +10,6 @@
 #import "PreviewTableCell.h"
 #import "MarkSheetItem.h"
 #import "ScoreViewController.h"
-#import "UIButton+Bootstrap.h"
 #import "MarkSheetItem.h"
 #import "TYAppDelegate.h"
 #import "Student.h"
@@ -22,6 +21,9 @@
 #import "WTRequestCenter.h"
 #import "LoginViewController.h"
 #import "RMMapper.h"
+#import "UIImageView+PINRemoteImage.h"
+#import "PINCache/PINCache.h"
+#import "FLAnimatedImage/FLAnimatedImageView.h"
 
 #define PREVIEWCELLID @"UMPreviewCell"
 
@@ -85,7 +87,7 @@ int nIndex = 0;
     } else {
         nIndex = 0;
         [self.commitBtn setHidden:YES];
-        [self.returnBtn setFrame:self.commitBtn.frame];
+        //[self.returnBtn setFrame:self.commitBtn.frame];
         [self.signButton setTitle:@"" forState:UIControlStateNormal];
         [self.signButton setUserInteractionEnabled:NO];
         
@@ -134,12 +136,21 @@ int nIndex = 0;
     url=[url stringByAppendingString:BaseUrl];
     url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchScoreInfoImage?SI_ID=%@",[self scoreID]];
     NSURL *TempUrl = [NSURL URLWithString:url];
+    /*
     [WTRequestCenter getImageWithURL:TempUrl completionHandler:^(UIImage *image) {
         if (image != nil) {
             [[self signButton] setBackgroundImage:image forState:UIControlStateNormal];
         }
         
     }];
+    */
+    UIImageView *imageView = [[UIImageView alloc] init];
+    [imageView setImageFromURL:TempUrl
+                     completion:^(PINRemoteImageManagerResult *result) {
+                         if (result.image != nil) {
+                             [[self signButton] setBackgroundImage:result.image forState:UIControlStateNormal];
+                         }
+                     }];
 }
 
 /**
@@ -323,7 +334,12 @@ int nIndex = 0;
         NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGRect rect = cell.scoreContent.frame;
         rect.size.height = [self getLabelHeight:indexPath];
-        [cell.scoreContent setFrame:rect];
+        if (iOS8)
+        {
+            [cell.scoreContent setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
+        } else if (iOS7) {
+            [cell.scoreContent setFrame:rect];
+        }
         [cell.scoreContent setText:content];
         //
 
@@ -336,56 +352,14 @@ int nIndex = 0;
     
 }
 
--(UIColor *) colorWithHexString: (NSString *) stringToConvert
-{
-    NSString *cString = [[stringToConvert stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] uppercaseString];
-    
-    // String should be 6 or 8 characters
-    if ([cString length] < 6) {
-        return [UIColor clearColor];
-    }
-    
-    // strip 0X if it appears
-    if ([cString hasPrefix:@"0X"])
-        cString = [cString substringFromIndex:2];
-    if ([cString hasPrefix:@"#"])
-        cString = [cString substringFromIndex:1];
-    if ([cString length] != 6)
-        return [UIColor clearColor];
-    
-    // Separate into r, g, b substrings
-    NSRange range;
-    range.location = 0;
-    range.length = 2;
-    
-    //r
-    NSString *rString = [cString substringWithRange:range];
-    
-    //g
-    range.location = 2;
-    NSString *gString = [cString substringWithRange:range];
-    
-    //b
-    range.location = 4;
-    NSString *bString = [cString substringWithRange:range];
-    
-    // Scan values
-    unsigned int r, g, b;
-    [[NSScanner scannerWithString:rString] scanHexInt:&r];
-    [[NSScanner scannerWithString:gString] scanHexInt:&g];
-    [[NSScanner scannerWithString:bString] scanHexInt:&b];
-    
-    return [UIColor colorWithRed:((float) r / 255.0f) green:((float) g / 255.0f) blue:((float) b / 255.0f) alpha:1.0f];
-}
-
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     // Background color
-    view.tintColor = [self colorWithHexString:@"F5F5F5"];
+    view.tintColor = [TYAppDelegate colorWithHexString:@"EFEFF4"];
     
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    [header.textLabel setTextColor:[self colorWithHexString:@"067BAB"]];
+    [header.textLabel setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     
 }
 

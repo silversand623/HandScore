@@ -14,7 +14,6 @@
 #import "RMMapper.h"
 #import "ComboxView.h"
 #import "PreviewController.h"
-#import "UIButton+Bootstrap.h"
 #import "MainViewController.h"
 #import "MBProgressHUD.h"
 #import "TYAppDelegate.h"
@@ -434,7 +433,13 @@ int nMode = 0;
         NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGRect rect = cell.ScoreItem.frame;
         rect.size.height = [self getLabelHeight:indexPath];
-        [cell.ScoreItem setFrame:rect];        
+        if (iOS8)
+        {
+            [cell.ScoreItem setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
+        } else if (iOS7) {
+            [cell.ScoreItem setFrame:rect];
+        }
+      
         
         [cell.ScoreItem setText:content];
         //
@@ -467,6 +472,20 @@ int nMode = 0;
     
     return cell;
     
+    
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    header.backgroundView = ({
+        UIView * view1 = [[UIView alloc] initWithFrame:header.bounds];
+        view1.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+        view1;
+    });
+    [header.textLabel setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     
 }
 

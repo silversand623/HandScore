@@ -1,0 +1,6 @@
+pod 'PINRemoteImage'
+pod 'TPKeyboardAvoiding'
+pod 'RMMapper'
+pod 'SWTableViewCell'
+pod 'MBProgressHUD'
+pod 'CustomIOSAlertView'

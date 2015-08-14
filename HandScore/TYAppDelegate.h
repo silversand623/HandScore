@@ -21,5 +21,5 @@
 @property(nonatomic,strong) NSMutableArray *gStudentScores;
 @property(nonatomic,strong) NSString *gImgPath;
 @property(nonatomic,strong) NSString *gScoreFile;
-
++(UIColor *) colorWithHexString: (NSString *) stringToConvert;
 @end

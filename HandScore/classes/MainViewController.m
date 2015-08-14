@@ -12,13 +12,15 @@
 #import "LoginInfoType.h"
 #import "RMMapper.h"
 #import "Student.h"
-#import "CustomIOS7AlertView.h"
+#import "CustomIOSAlertView.h"
 #import "ScoreViewController.h"
-#import "UIButton+Bootstrap.h"
 #import "TYAppDelegate.h"
 #import "LoginViewController.h"
 #import "PreviewController.h"
 #import "MBProgressHUD.h"
+#import "UIImageView+PINRemoteImage.h"
+#import "PINCache/PINCache.h"
+#import "FLAnimatedImage/FLAnimatedImageView.h"
 
 #define PAGECOUNT @"1000"
 #define CUSTOMCELLID @"UMCell"
@@ -331,13 +333,21 @@
         cell.labelStudentNo.text = studentInfo.U_Name;
         cell.labelName.text = [studentInfo.U_TrueName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         cell.labelStatus.text = [StatusArray objectAtIndex:([studentInfo.student_state intValue])];
+        if ([studentInfo.student_state intValue] == 1) {
+            cell.labelStatus.textColor = [TYAppDelegate colorWithHexString:@"EA2E13"];
+        } else if ([studentInfo.student_state intValue] == 2) {
+            cell.labelStatus.textColor = [TYAppDelegate colorWithHexString:@"58C538"];
+        } else
+        {
+            cell.labelStatus.textColor = [UIColor blackColor];
+        }
         cell.labelScore.text = studentInfo.student_score;
         cell.labelClassName.text = [studentInfo.O_Name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         int nButton = [studentInfo.student_state intValue];
         [cell setRightUtilityButtons:[self rightButtons:nButton] WithButtonWidth:90.0f];
         
-        //NSString *path = [[NSBundle mainBundle] pathForResource:@"user_icon" ofType:@"png"];
-        //cell.image.image = [UIImage imageWithContentsOfFile:path];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"user_icon" ofType:@"png"];
+        cell.image.image = [UIImage imageWithContentsOfFile:path];
         
         //hide live image
         [cell.liveImage setHidden:YES];
@@ -352,7 +362,7 @@
         url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhotoFromUserPhoto?U_ID=%@&E_ID=%@",studentInfo.U_ID,appDelegate.gLoginItem.E_ID];
         
         NSURL *TempUrl = [NSURL URLWithString:url];
-        
+        /*
         cell.liveImage.tag = [studentInfo.U_ID intValue];
         
         [WTRequestCenter getImageWithURL:TempUrl completionHandler:^(UIImage *image) {
@@ -361,23 +371,21 @@
             }
             
         }];
-        
+        */
         //display student photo
         
         NSString *urlNew=@"http://";
         urlNew=[urlNew stringByAppendingString:BaseUrl];
         urlNew=[urlNew stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhoto?U_ID=%@",studentInfo.U_ID];
         
-        cell.image.tag = [studentInfo.U_ID intValue];
+        [cell.image setImageFromURL:[NSURL URLWithString:urlNew]
+                                 completion:^(PINRemoteImageManagerResult *result) {
+                                     if (result.image != nil && cell.image.tag == [studentInfo.U_ID intValue]) {
+                                         cell.image.image = result.image;
+                                     }
+                                 }];
+        //[cell.image setImageFromURL:[NSURL URLWithString:urlNew]];
         
-        TempUrl = [NSURL URLWithString:urlNew];
-        [WTRequestCenter getImageWithURL:TempUrl completionHandler:^(UIImage *image) {
-            if (image != nil && cell.image.tag == [studentInfo.U_ID intValue]) {
-                cell.image.image = image;
-            }
-            
-            
-        }];
     }
     if ((indexPath.row%2) == 0) {
         //cell.contentView.backgroundColor = [UIColor lightGrayColor];
@@ -483,7 +491,7 @@
             [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:cellIndexPath,nil] withRowAnimation:UITableViewRowAnimationMiddle];
             //cell.imageView.image
             // Here we need to pass a full frame
-            CustomIOS7AlertView *alertView = [[CustomIOS7AlertView alloc] init];
+            CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
             
             // Add some custom content to the alert view
             [alertView setContainerView:[self createImageView:cell]];
@@ -493,7 +501,7 @@
             //[alertView setDelegate:self];
             
             // You may use a Block, rather than a delegate.
-            [alertView setOnButtonTouchUpInside:^(CustomIOS7AlertView *alertView, int buttonIndex) {
+            [alertView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
                 NSLog(@"Block: Button at position %d is clicked on alertView %d.", buttonIndex, (int)[alertView tag]);
                 [alertView close];
             }];

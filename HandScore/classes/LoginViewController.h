@@ -24,6 +24,7 @@
 typedef enum
 {
     //以下是枚举成员
+    LoginError = -3,
     PwdError = -2,
     UserError = -1,
     NoExam = 0,

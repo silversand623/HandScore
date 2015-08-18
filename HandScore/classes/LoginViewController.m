@@ -201,6 +201,12 @@
         {
             break;
         }
+        case LoginError:
+        {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"登录错误" message:@"远程评委不允许登录手持设备" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            break;
+        }
         default:
         {
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"其它错误" message:@"其他内部错误" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
@@ -252,6 +258,8 @@
  *  @param sender 设置按钮对象
  */
 - (IBAction)setupIP:(id)sender {
+    [[self username] resignFirstResponder];
+    [[self password] resignFirstResponder];
     UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"设置IP" message:@"请输入IP地址" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消",nil ] ;
     alert.alertViewStyle=UIAlertViewStylePlainTextInput;
     UITextField *tf=[alert textFieldAtIndex:0];

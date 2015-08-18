@@ -82,7 +82,7 @@ int nIndex = 0;
             [self.signButton setBackgroundImage:bgImage forState:UIControlStateNormal];
             [self.signButton setTitle:@"" forState:UIControlStateNormal];
         }
-        
+        [[self MarkSheetName] setText:_markSheets[0]];
         
     } else {
         nIndex = 0;
@@ -104,6 +104,7 @@ int nIndex = 0;
                     UIImage *bgImage = [[UIImage alloc]initWithContentsOfFile:[self imgPath]];
                     [self.signButton setBackgroundImage:bgImage forState:UIControlStateNormal];
                 }
+                [[self MarkSheetName] setText:[obj objectAtIndex:4]];
                 bValue = YES;
                 break;
             }
@@ -190,6 +191,9 @@ int nIndex = 0;
                                               int nRestult = [self dealError:str];
                                               if (nRestult == Success) {
                                                   ///
+                                                  NSString * markName = [obj objectForKey:@"MS_Name"];
+                                                  [[self MarkSheetName] setText:[markName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                                                  
                                                   _sections = [[NSMutableArray alloc] init];
                                                   _sheetItems = [[NSMutableArray alloc] init];
                                                   [self.sheetItems addObject:[NSMutableArray array]];
@@ -224,6 +228,7 @@ int nIndex = 0;
                                                   [[self actureScore] setText:[NSString stringWithFormat:@"%0.1f", [self getSum]]];
 
                                                   [[self tableView] reloadData];
+                                                  
                                               }
                                               
                                           }
@@ -473,6 +478,7 @@ int nIndex = 0;
                                                   [temp addObject:[_sections objectAtIndex:nIndex]];//一级评分表项
                                                   [temp addObject:[_sheetItems objectAtIndex:nIndex]];//评分表项
                                                   [temp addObject:_imgPath];//添加签名图片路径
+                                                  [temp addObject:_markSheets[0]];//评分表名字
                                                   [appDelegate.gStudentScores addObject:temp];
                                                   
                                                   //modify student state

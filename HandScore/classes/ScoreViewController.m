@@ -60,7 +60,7 @@ int nMode = 0;
     bScore = YES;
     self.tableView.rowHeight = 60;
     _comView = [[ComboxView alloc] initWithFrame:CGRectMake(140, 140, 490, 100)];
-    [self.view addSubview:_comView];
+    //[self.view addSubview:_comView]; //comment for only one marksheet
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeWindow) name:@"closeView" object:nil];
     
@@ -97,6 +97,7 @@ int nMode = 0;
         _comView.delegate = self;
         _comView.textField.text = _markSheets[nCount];
         [_comView.dropTableView reloadData];
+        [[self MarkSheetName] setText:_markSheets[0]];
     }
     
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
@@ -282,6 +283,8 @@ int nMode = 0;
                                                   _comView.delegate = self;
                                                   _comView.textField.text = _markSheets[0];
                                                   [_comView.dropTableView reloadData];
+                                                  
+                                                  [[self MarkSheetName] setText:_markSheets[0]];
                                                   
                                                   [self setState:nMode step:dStep];
                                                   

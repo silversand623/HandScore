@@ -25,6 +25,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *signButton;
 @property (weak, nonatomic) IBOutlet UIButton *returnBtn;
 @property (weak, nonatomic) IBOutlet UIButton *commitBtn;
+@property (weak, nonatomic) IBOutlet UILabel *MarkSheetName;
 @property(nonatomic,retain) NSMutableDictionary *dataMarkSheet;//评分表原始数据,需要修改值，所以用可变字典
 @property NSInteger nTag;//区分从哪里进入预览页面
 @property (nonatomic,retain) MBProgressHUD *HUD;

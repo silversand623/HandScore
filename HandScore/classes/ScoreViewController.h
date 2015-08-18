@@ -35,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *StudentNo;
 @property(nonatomic,retain) NSString *imgPath;//签名图像路径
 @property (weak, nonatomic) IBOutlet UILabel *txtName;
+@property (weak, nonatomic) IBOutlet UILabel *MarkSheetName;
 - (IBAction)setSetings:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnShowInfo;
 

@@ -195,8 +195,8 @@
                                       [formater setLocale: local];
                                       [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                                       NSDate* dateSystem = [formater dateFromString:nsTime];
-                                      NSDate* dateStart = [formater dateFromString:[NSString stringWithFormat:@"%@ %@:00",[nsTime substringToIndex:10],Info.Exam_StartTime]];
-                                      NSDate* dateEnd = [formater dateFromString:[NSString stringWithFormat:@"%@ %@:00",[nsTime substringToIndex:10],Info.Exam_EndTime]];
+                                      NSDate* dateStart = [formater dateFromString:[NSString stringWithFormat:@"%@ %@:00",[nsTime substringToIndex:5],Info.Exam_StartTime]];
+                                      NSDate* dateEnd = [formater dateFromString:[NSString stringWithFormat:@"%@ %@:00",[nsTime substringToIndex:5],Info.Exam_EndTime]];
                                       NSTimeInterval tmInterval1= [dateSystem timeIntervalSinceDate:dateStart];
                                       NSTimeInterval tmInterval2= [dateEnd timeIntervalSinceDate:dateSystem];
                                       
@@ -330,7 +330,7 @@
         cell.labelTime.text = studentInfo.Exam_StartTime;
         cell.labelExamNo.text = studentInfo.EStu_ExamNumber;
         
-        cell.labelStudentNo.text = studentInfo.U_Name;
+        cell.labelStudentNo.text = [studentInfo.U_Name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         cell.labelName.text = [studentInfo.U_TrueName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         cell.labelStatus.text = [StatusArray objectAtIndex:([studentInfo.student_state intValue])];
         if ([studentInfo.student_state intValue] == 1) {

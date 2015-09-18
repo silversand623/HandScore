@@ -66,7 +66,7 @@ int nIndex = 0;
         if ([obj.U_ID isEqualToString:appDelegate.gStudentId]) {
             [[self labelExamNo] setText:obj.EStu_ExamNumber];//确认到底是学生号码还是考试号码
             [[self labelName] setText:[obj.U_TrueName stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-            [[self labelStudentNo] setText:obj.U_Name];
+            [[self labelStudentNo] setText:[obj.U_Name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             [[self labelClassName] setText:[obj.O_Name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             break;
         }

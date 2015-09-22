@@ -20,7 +20,7 @@
 #import "Student.h"
 #import "LoginViewController.h"
 #import "Settings.h"
-
+#import <math.h>
 
 #define SCORECELLID @"ScoreCell"
 
@@ -446,9 +446,16 @@ int nMode = 0;
       
         
         [cell.ScoreItem setText:content];
+        
         //
         if (item.rating_value != nil) {
-            cell.Rating.value = [item.rating_value floatValue];
+            if (fabs([item.Item_Score floatValue]) < 0.001f) {
+                cell.Rating.value = 0.0;
+            }else
+            {
+                cell.Rating.value = [item.rating_value floatValue];
+            }
+            
             cell.FinalScore.text = item.Item_Score;
             //[cell.FinalScore setTextColor:[UIColor blueColor]];
             [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
@@ -507,7 +514,6 @@ int nMode = 0;
     CGFloat percentage = pt.x / sender.bounds.size.width;
     CGFloat delta = percentage * (sender.maximumValue - sender.minimumValue);
     CGFloat value = sender.minimumValue + delta;
-    [sender setValue:value];
     
     ScoreTableViewCell *cell = [self getCell:sender];
     
@@ -516,7 +522,15 @@ int nMode = 0;
     if (dStep > score ) {
         stepValue = score;
     }
-    float nValue = floorf((sender.value*score)/stepValue);
+    float nValue = 0.0f;
+    if (fabs(score) < 0.001f) {
+        value = 0.0f;
+    }else
+    {
+        nValue= floorf((value*score)/stepValue);
+    }
+    [sender setValue:value];
+    
     [cell.FinalScore setText:[NSString stringWithFormat:@"%.1f", floorf(nValue)*stepValue]];
     cell.stepValue.value = nValue;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
@@ -542,7 +556,15 @@ int nMode = 0;
     if (dStep > score ) {
         stepValue = score;
     }
-    float nValue = floorf((sender.value*score)/stepValue);
+    CGFloat value = sender.value;
+    float nValue = 0.0f;
+    if (fabs(score) < 0.001f) {
+        value = 0.0f;
+        [sender setValue:value];
+    }else
+    {
+        nValue= floorf((value*score)/stepValue);
+    }
     [cell.FinalScore setText:[NSString stringWithFormat:@"%.1f", floorf(nValue)*stepValue]];
     cell.stepValue.value = nValue;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
@@ -565,7 +587,13 @@ int nMode = 0;
     ScoreTableViewCell *cell = [self getCell:sender];
     double stepValue = dStep;
     double score = [cell.ScoreValue.text doubleValue];
-    sender.value = MIN(score/stepValue, sender.value);
+    
+    CGFloat value = sender.value;
+    if (fabs(score) < 0.001f) {
+        value = 0.0f;
+    }
+    
+    sender.value = MIN(score/stepValue, value);
     cell.Rating.value = sender.value*stepValue/score;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];

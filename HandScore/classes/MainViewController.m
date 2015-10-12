@@ -84,6 +84,8 @@
         [self getStudentInfo];
     }
     
+    [self getMarkSheetInfo];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -279,6 +281,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     Student *Info = (Student *)StudentArray[indexPath.row];
     int ncount = [Info.student_state intValue];
+    if (!self.bHaveMarkSheet) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"其它错误" message:@"当前评委没有评分表，无法进行评分" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     
     switch (ncount) {
         case HaveScored:
@@ -305,6 +312,59 @@
     }
 }
 
+/**
+ *  获取评分标信息
+ */
+-(void) getMarkSheetInfo
+{
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
+    TYAppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    LoginInfoType *info = appDelegate.gLoginItem;
+    [params setObject:info.EU_ID forKey:@"EU_ID"];
+    
+    NSString *BaseUrl=[defaults objectForKey:@"IPConfig"];
+    NSString *url=@"http://";
+    url=[url stringByAppendingString:BaseUrl];
+    url=[url stringByAppendingFormat:@"%@",@"/AppDataInterface/HandScore.aspx/SearchMarkSheet"];
+    NSURL *TempUrl = [NSURL URLWithString:url];
+    _bHaveMarkSheet = NO;
+    
+    [WTRequestCenter postWithoutCacheURL:TempUrl
+                              parameters:params completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                  if (!error) {
+                                      NSError *jsonError = nil;
+                                      id obj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                                      if (!jsonError) {
+                                          ///
+                                          NSString *str = [obj objectForKey:@"result"];
+                                          if (str != nil) {
+                                              int nRestult = [self dealError:str];
+                                              if (nRestult == Success) {
+                                                  NSArray *mark_list = [obj objectForKey:@"mark_sheet_list"];
+                                                  if (mark_list.count > 0) {
+                                                      _bHaveMarkSheet = YES;
+                                                  }
+                                              }
+                                              
+                                          }
+                                      }else
+                                      {
+                                          NSLog(@"jsonError:%@",jsonError);
+                                          UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"json格式错误" message:[jsonError localizedDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                                          [alert show];
+                                          NSLog(@"jsonError:%@",jsonError);
+                                      }
+                                      
+                                  }else
+                                  {
+                                      UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"网络连接错误" message:[error localizedDescription] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                                      [alert show];
+                                      NSLog(@"error:%@",error);
+                                  }
+                                  
+                              }];
+}
 
 #pragma mark - UIScrollViewDelegate
 /**
@@ -566,6 +626,13 @@
     
     [cell hideUtilityButtonsAnimated:YES];
     
+    if (!self.bHaveMarkSheet) {
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"其它错误" message:@"当前评委没有评分表，无法进行评分" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+
+
     switch (ncount) {
         case HaveScored:
         {

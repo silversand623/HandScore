@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *StationName;
 @property (weak, nonatomic) IBOutlet UILabel *RoomName;
 @property (weak, nonatomic) IBOutlet UILabel *ScoreItems;
+@property BOOL bHaveMarkSheet;//判断是否有评分表
 
 typedef enum
 {

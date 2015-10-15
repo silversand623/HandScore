@@ -421,7 +421,7 @@
         url=[url stringByAppendingString:BaseUrl];
         url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhotoFromUserPhoto?U_ID=%@&E_ID=%@",studentInfo.U_ID,appDelegate.gLoginItem.E_ID];
         
-        NSURL *TempUrl = [NSURL URLWithString:url];
+        //NSURL *TempUrl = [NSURL URLWithString:url];
         /*
         cell.liveImage.tag = [studentInfo.U_ID intValue];
         
@@ -432,6 +432,14 @@
             
         }];
         */
+        
+        [cell.liveImage setImageFromURL:[NSURL URLWithString:url]
+                         completion:^(PINRemoteImageManagerResult *result) {
+                             if (result.image != nil && cell.liveImage.tag == [studentInfo.U_ID intValue]) {
+                                 cell.liveImage.image = result.image;
+                             }
+                         }];
+        
         //display student photo
         
         NSString *urlNew=@"http://";

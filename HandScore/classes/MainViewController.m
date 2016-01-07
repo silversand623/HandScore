@@ -408,6 +408,7 @@
         
         NSString *path = [[NSBundle mainBundle] pathForResource:@"user_icon" ofType:@"png"];
         cell.image.image = [UIImage imageWithContentsOfFile:path];
+        cell.liveImage.image = [UIImage imageWithContentsOfFile:path];
         
         //hide live image
         [cell.liveImage setHidden:YES];
@@ -432,7 +433,7 @@
             
         }];
         */
-        
+        cell.liveImage.tag = [studentInfo.U_ID intValue];
         [cell.liveImage setImageFromURL:[NSURL URLWithString:url]
                          completion:^(PINRemoteImageManagerResult *result) {
                              if (result.image != nil && cell.liveImage.tag == [studentInfo.U_ID intValue]) {
@@ -446,6 +447,7 @@
         urlNew=[urlNew stringByAppendingString:BaseUrl];
         urlNew=[urlNew stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhoto?U_ID=%@",studentInfo.U_ID];
         
+        cell.image.tag = [studentInfo.U_ID intValue];
         [cell.image setImageFromURL:[NSURL URLWithString:urlNew]
                                  completion:^(PINRemoteImageManagerResult *result) {
                                      if (result.image != nil && cell.image.tag == [studentInfo.U_ID intValue]) {

@@ -55,10 +55,23 @@
 - (void)closeTableView
 {
     if (showList) {
+        /*
         //self.hidden = YES;
         [self.dropTableView setHidden:YES];
         [_dropTableView removeFromSuperview];
         showList = NO;
+         */
+        showList = NO;
+        _dropTableView.hidden = YES;
+        
+        CGRect sf = self.frame;
+        sf.size.height = 30;
+        self.frame = sf;
+        CGRect frame = _dropTableView.frame;
+        frame.size.height = 0;
+        _dropTableView.frame = frame;
+        //选择完后，移除
+        [_dropTableView removeFromSuperview];
     }
 }
 

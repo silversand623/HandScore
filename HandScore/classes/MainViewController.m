@@ -558,30 +558,51 @@
         {
             NSLog(@"left button 0 was pressed");
             NSIndexPath *cellIndexPath = [self.tableView indexPathForCell:cell];
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:cellIndexPath,nil] withRowAnimation:UITableViewRowAnimationMiddle];
+            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:cellIndexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
             //cell.imageView.image
             // Here we need to pass a full frame
-            CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
             
-            // Add some custom content to the alert view
-            [alertView setContainerView:[self createImageView:cell]];
+            //display student photo
+            UMTableViewCell* cellLive = (UMTableViewCell*)cell;
+            TYAppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
             
-            // Modify the parameters
-            [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"关闭", nil]];
-            //[alertView setDelegate:self];
+            NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+            NSString *BaseUrl=[defaults objectForKey:@"IPConfig"];
+            NSString *url=@"http://";
+            url=[url stringByAppendingString:BaseUrl];
+            url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhotoFromUserPhoto?U_ID=%d&E_ID=%@",cellLive.liveImage.tag,appDelegate.gLoginItem.E_ID];
             
-            // You may use a Block, rather than a delegate.
-            [alertView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
-                NSLog(@"Block: Button at position %d is clicked on alertView %d.", buttonIndex, (int)[alertView tag]);
-                [alertView close];
-            }];
             
-            [alertView setUseMotionEffects:true];
+            [cellLive.liveImage setImageFromURL:[NSURL URLWithString:url]
+                                 completion:^(PINRemoteImageManagerResult *result) {
+                                     if (result.image != nil) {
+                                         cellLive.liveImage.image = result.image;
+                                     }
+                                     
+                                     CustomIOSAlertView *alertView = [[CustomIOSAlertView alloc] init];
+                                     
+                                     // Add some custom content to the alert view
+                                     [alertView setContainerView:[self createImageView:cell]];
+                                     
+                                     // Modify the parameters
+                                     [alertView setButtonTitles:[NSMutableArray arrayWithObjects:@"关闭", nil]];
+                                     //[alertView setDelegate:self];
+                                     
+                                     // You may use a Block, rather than a delegate.
+                                     [alertView setOnButtonTouchUpInside:^(CustomIOSAlertView *alertView, int buttonIndex) {
+                                         NSLog(@"Block: Button at position %d is clicked on alertView %d.", buttonIndex, (int)[alertView tag]);
+                                         [alertView close];
+                                     }];
+                                     
+                                     [alertView setUseMotionEffects:true];
+                                     
+                                     // And launch the dialog
+                                     [alertView show];
+                                     
+                                     [cell hideUtilityButtonsAnimated:YES];
+                                 }];
             
-            // And launch the dialog
-            [alertView show];
             
-            [cell hideUtilityButtonsAnimated:YES];
             break;
         }
         default:

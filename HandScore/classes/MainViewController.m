@@ -197,8 +197,8 @@
                                       [formater setLocale: local];
                                       [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                                       NSDate* dateSystem = [formater dateFromString:nsTime];
-                                      NSDate* dateStart = [formater dateFromString:[NSString stringWithFormat:@"%@ %@:00",[nsTime substringToIndex:5],Info.Exam_StartTime]];
-                                      NSDate* dateEnd = [formater dateFromString:[NSString stringWithFormat:@"%@ %@:00",[nsTime substringToIndex:5],Info.Exam_EndTime]];
+                                      NSDate* dateStart = [formater dateFromString:[NSString stringWithFormat:@"%@ %@",[nsTime substringToIndex:5],Info.Exam_StartTime]];
+                                      NSDate* dateEnd = [formater dateFromString:[NSString stringWithFormat:@"%@ %@",[nsTime substringToIndex:5],Info.Exam_EndTime]];
                                       NSTimeInterval tmInterval1= [dateSystem timeIntervalSinceDate:dateStart];
                                       NSTimeInterval tmInterval2= [dateEnd timeIntervalSinceDate:dateSystem];
                                       

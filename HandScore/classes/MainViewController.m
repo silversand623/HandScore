@@ -192,13 +192,18 @@
                                       [HUD hide:YES];
                                       NSString *nsTime = [[NSString alloc] initWithData:data  encoding:NSUTF8StringEncoding];
                                       //NSString *nsCompare = [nsTime substringFromIndex:10];
-                                      NSLocale* local =[[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
+                                      NSLocale* local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
                                       NSDateFormatter* formater = [[NSDateFormatter alloc] init];
                                       [formater setLocale: local];
                                       [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                                      NSDateFormatter* formater1 = [[NSDateFormatter alloc] init];
+                                      [formater1 setLocale: local];
+                                      [formater1 setDateFormat:@"yyyy-MM-dd HH:mm"];
                                       NSDate* dateSystem = [formater dateFromString:nsTime];
-                                      NSDate* dateStart = [formater dateFromString:[NSString stringWithFormat:@"%@ %@",[nsTime substringToIndex:5],Info.Exam_StartTime]];
-                                      NSDate* dateEnd = [formater dateFromString:[NSString stringWithFormat:@"%@ %@",[nsTime substringToIndex:5],Info.Exam_EndTime]];
+                                      NSString* nsStart = [[nsTime substringToIndex:5] stringByAppendingString:[Info.Exam_StartTime substringToIndex:11]];
+                                      NSDate* dateStart = [formater1 dateFromString:nsStart];
+                                      NSString* nsEnd = [[nsTime substringToIndex:5] stringByAppendingString:[Info.Exam_EndTime substringToIndex:11]];
+                                      NSDate* dateEnd = [formater1 dateFromString:nsEnd];
                                       NSTimeInterval tmInterval1= [dateSystem timeIntervalSinceDate:dateStart];
                                       NSTimeInterval tmInterval2= [dateEnd timeIntervalSinceDate:dateSystem];
                                       

@@ -575,7 +575,7 @@
             NSString *BaseUrl=[defaults objectForKey:@"IPConfig"];
             NSString *url=@"http://";
             url=[url stringByAppendingString:BaseUrl];
-            url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhotoFromUserPhoto?U_ID=%d&E_ID=%@",cellLive.liveImage.tag,appDelegate.gLoginItem.E_ID];
+            url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhotoFromUserPhoto?U_ID=%d&E_ID=%@&rand=%ld",cellLive.liveImage.tag,appDelegate.gLoginItem.E_ID,random()];
             
             
             [cellLive.liveImage setImageFromURL:[NSURL URLWithString:url]

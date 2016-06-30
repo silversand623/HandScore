@@ -349,7 +349,7 @@ int nMode = 0;
 
 -(CGFloat)getLabelHeight:(NSIndexPath *)indexPath {
     // 列寬
-    CGFloat contentWidth = 570;
+    CGFloat contentWidth = 400;
     // 用何種字體進行顯示
     UIFont *font = [UIFont systemFontOfSize:20];
     

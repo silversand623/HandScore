@@ -101,7 +101,7 @@
             [defaults synchronize];
             
             HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-            [HUD setLabelText:@"正在登陆"];
+            [HUD setLabelText:@"正在登录"];
             [self getExamInfo];
         }
         

@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *username;//用户名
 @property (weak, nonatomic) IBOutlet UITextField *password;//用户密码
 @property (weak, nonatomic) IBOutlet TPKeyboardAvoidingScrollView *scrollView;//滚动视图
-@property (weak, nonatomic) IBOutlet UIButton *loginbtn;//登陆按钮
+@property (weak, nonatomic) IBOutlet UIButton *loginbtn;//登录按钮
 
 - (IBAction)setupIP:(id)sender;
 

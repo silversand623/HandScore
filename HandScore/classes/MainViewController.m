@@ -425,7 +425,7 @@
         NSString *BaseUrl=[defaults objectForKey:@"IPConfig"];
         NSString *url=@"http://";
         url=[url stringByAppendingString:BaseUrl];
-        url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhotoFromUserPhoto?U_ID=%@&E_ID=%@",studentInfo.U_ID,appDelegate.gLoginItem.E_ID];
+        url=[url stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhotoFromUserPhoto?U_ID=%@&E_ID=%@&rand=%ld",studentInfo.U_ID,appDelegate.gLoginItem.E_ID,random()];
         
         //NSURL *TempUrl = [NSURL URLWithString:url];
         /*
@@ -450,7 +450,7 @@
         
         NSString *urlNew=@"http://";
         urlNew=[urlNew stringByAppendingString:BaseUrl];
-        urlNew=[urlNew stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhoto?U_ID=%@",studentInfo.U_ID];
+        urlNew=[urlNew stringByAppendingFormat:@"/AppDataInterface/HandScore.aspx/SearchStudentPhoto?U_ID=%@&rand=%ld",studentInfo.U_ID,random()];
         
         cell.image.tag = [studentInfo.U_ID intValue];
         [cell.image setImageFromURL:[NSURL URLWithString:urlNew]

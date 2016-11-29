@@ -22,6 +22,10 @@
 @property (weak, nonatomic) IBOutlet UILabel *ScoreItems;
 @property BOOL bHaveMarkSheet;//判断是否有评分表
 
+@property (strong, nonatomic) NSTimer *myTimer;
+
+@property(nonatomic,retain) NSString *sNext;
+
 typedef enum
 {
     //以下是枚举成员

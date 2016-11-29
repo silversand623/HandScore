@@ -86,6 +86,17 @@
     
     [self getMarkSheetInfo];
     
+    _myTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(HighlightItem) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:_myTimer forMode:NSRunLoopCommonModes];
+    
+}
+
+-(void)HighlightItem
+{
+    if (StudentArray.count>0) {
+        [self checkNextStudent];
+    }
+    [self.tableView reloadData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -168,6 +179,61 @@
                               [alert show];                          }
                           
                       }];
+}
+
+-(void) checkNextStudent
+{
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
+    
+    NSString *BaseUrl=[defaults objectForKey:@"IPConfig"];
+    NSString *url=@"http://";
+    url=[url stringByAppendingString:BaseUrl];
+    url=[url stringByAppendingFormat:@"%@",@"/AppDataInterface/HandScore.aspx/SearchCurrentSystemDatetime"];
+    NSURL *TempUrl = [NSURL URLWithString:url];
+    
+    [WTRequestCenter postWithoutCacheURL:TempUrl
+                              parameters:params completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                  if (!error) {
+                                      [HUD hide:YES];
+                                      NSString *nsTime = [[NSString alloc] initWithData:data  encoding:NSUTF8StringEncoding];
+                                      //NSString *nsCompare = [nsTime substringFromIndex:10];
+                                      NSLocale* local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+                                      NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+                                      [formater setLocale: local];
+                                      [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+                                      NSDateFormatter* formater1 = [[NSDateFormatter alloc] init];
+                                      [formater1 setLocale: local];
+                                      [formater1 setDateFormat:@"yyyy-MM-dd HH:mm"];
+                                      NSDate* dateSystem = [formater dateFromString:nsTime];
+                                      for (int k=0; k<StudentArray.count; k++) {
+                                          Student *Info = StudentArray[k];
+                                          NSString* nsStart = [[nsTime substringToIndex:5] stringByAppendingString:[Info.Exam_StartTime substringToIndex:11]];
+                                          NSDate* dateStart = [formater1 dateFromString:nsStart];
+                                          NSString* nsEnd = [[nsTime substringToIndex:5] stringByAppendingString:[Info.Exam_EndTime substringToIndex:11]];
+                                          NSDate* dateEnd = [formater1 dateFromString:nsEnd];
+                                          NSTimeInterval tmInterval1= [dateSystem timeIntervalSinceDate:dateStart];
+                                          NSTimeInterval tmInterval2= [dateEnd timeIntervalSinceDate:dateSystem];
+                                          
+                                          
+                                          if (tmInterval1 >= 0.0 && tmInterval2 >= 0.0) {
+                                              
+                                              
+                                          } else if (tmInterval1 < 0.0)
+                                          {
+                                              _sNext = Info.U_ID;
+                                              break;
+                                          } else if (tmInterval2 < 0.0)
+                                          {
+                                              
+                                          }
+                                      }
+                                      
+                                      
+                                      
+                                  }
+                                  
+                              }];
 }
 
 /**
@@ -390,9 +456,18 @@
     
     
     cell.delegate = self;
+    
+    if ((indexPath.row%2) == 0) {
+        cell.contentView.backgroundColor = [UIColor lightGrayColor];
+    }
+    else{
+        cell.contentView.backgroundColor = [UIColor whiteColor];
+    }
+    
     if (indexPath.row < StudentArray.count) {
         Student *studentInfo = StudentArray[indexPath.row];
         cell.labelTime.text = studentInfo.Exam_StartTime;
+        
         cell.labelExamNo.text = studentInfo.EStu_ExamNumber;
         
         cell.labelStudentNo.text = [studentInfo.U_Name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -400,11 +475,16 @@
         cell.labelStatus.text = [StatusArray objectAtIndex:([studentInfo.student_state intValue])];
         if ([studentInfo.student_state intValue] == 1) {
             cell.labelStatus.textColor = [TYAppDelegate colorWithHexString:@"EA2E13"];
+            
         } else if ([studentInfo.student_state intValue] == 2) {
             cell.labelStatus.textColor = [TYAppDelegate colorWithHexString:@"58C538"];
         } else
         {
             cell.labelStatus.textColor = [UIColor blackColor];
+            if ([_sNext isEqualToString:studentInfo.U_ID]) {
+                //cell.contentView.backgroundColor = [UIColor yellowColor];
+                cell.contentView.backgroundColor = [UIColor colorWithRed:6.0/255.0 green:105.0/255.0 blue:164.0/255.0 alpha:1.0];
+            }
         }
         cell.labelScore.text = studentInfo.student_score;
         cell.labelClassName.text = [studentInfo.O_Name stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -462,12 +542,7 @@
         //[cell.image setImageFromURL:[NSURL URLWithString:urlNew]];
         
     }
-    if ((indexPath.row%2) == 0) {
-        //cell.contentView.backgroundColor = [UIColor lightGrayColor];
-    }
-    else{
-        //cell.contentView.backgroundColor = [UIColor cyanColor];
-    }
+    
     
     return cell;
 

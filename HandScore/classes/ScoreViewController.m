@@ -20,6 +20,7 @@
 #import "Student.h"
 #import "LoginViewController.h"
 #import "Settings.h"
+#import "MJExtension.h"
 #import <math.h>
 
 #define SCORECELLID @"ScoreCell"
@@ -248,6 +249,14 @@ int nMode = 0;
                                           if (str != nil) {
                                               int nRestult = [self dealError:str];
                                               if (nRestult == Success) {
+                                                  // Tell MJExtension what type model will be contained in statuses and ads.
+                                                  [MarkSheetItem mj_setupObjectClassInArray:^NSDictionary *{
+                                                      return @{
+                                                               @"item_detail_list" : @"DetailItems"
+                                                               // @"ads" : [Ad class]
+                                                               };
+                                                  }];
+                                                  
                                                   self.dataMarkSheet = obj;
                                                   NSArray *mark_list = [obj objectForKey:@"mark_sheet_list"];
                                                   for (int i=0; i<mark_list.count; i++) {
@@ -258,15 +267,21 @@ int nMode = 0;
                                                       NSArray *mark_sheet_items = [dicList objectForKey:@"item_list"];
                                                       for (int j=0; j<mark_sheet_items.count; j++) {
                                                           NSDictionary *dicItems = [mark_sheet_items objectAtIndex:j];
+    
                                                           if ([[dicItems allKeys] containsObject:@"children_item_list"]) {
                                                               NSArray *children_list = [dicItems objectForKey:@"children_item_list"];
-                                                              NSMutableArray* markItems = [RMMapper mutableArrayOfClass:[MarkSheetItem class]
-                                                                                                  fromArrayOfDictionary:children_list];
+                                                              
+                                                              
+                                                              
+                                                              
                                                               [self.sections[i] addObject:([dicItems objectForKey:@"MSI_Item"])];
                                                               [self.sheetItems[i] addObject:[NSMutableArray array]];
-                                                              for (int n=0; n<markItems.count; n++) {
-                                                                  [self.sheetItems[i][j] addObject:markItems[n]];
+                                                              for (int k=0; k<children_list.count;k++)
+                                                              {
+                                                                  MarkSheetItem *markItem = [MarkSheetItem mj_objectWithKeyValues:children_list[k]];
+                                                                  [self.sheetItems[i][j] addObject:markItem];
                                                               }
+
                                                               
                                                           }else if ([[dicItems allKeys] containsObject:@"MSI_Score"]){
                                                               MarkSheetItem *markItem=[RMMapper objectWithClass:[MarkSheetItem class]

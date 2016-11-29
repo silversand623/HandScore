@@ -11,6 +11,7 @@
 @implementation MarkSheetItem
 @synthesize MSI_ID,MSI_Item,MSI_Score,Item_Score,step_value,rating_value;
 
+/*
 #pragma mark - nscoding delegate
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
@@ -33,6 +34,6 @@
         self.rating_value = [aDecoder decodeObjectForKey:@"rating_value"];
     }
     return self;
-}
+}*/
 
 @end

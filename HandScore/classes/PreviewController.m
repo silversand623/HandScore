@@ -607,14 +607,25 @@ int nIndex = 0;
             for (int n=0; n<children_list.count; n++) {
                 MarkSheetItem *markItem = (MarkSheetItem *)[self.sheetItems[nIndex][j] objectAtIndex:n];
                 NSMutableDictionary *childItem = [children_list objectAtIndex:n];
-                [childItem setValue:markItem.Item_Score forKey:@"MSI_Score"];
-                [childItem removeObjectForKey:@"MSI_Item"];
+                [childItem setValue:markItem.Item_Score forKey:@"Item_Score"];
+                [childItem setValue:@"" forKey:@"MSIRD_ID"];
+                for (int k=0; k<markItem.item_detail_list.count; k++) {
+                    id temp =[markItem.item_detail_list objectAtIndex:k];
+                    NSString *str1 = [markItem.Item_Score substringToIndex:3];
+                    NSString *str2 = [[temp objectForKey:@"MSIRD_Score"] substringToIndex:3];
+                    if ([str1 isEqualToString:str2])
+                    {
+                        [childItem setValue:[temp objectForKey:@"MSIRD_ID"] forKey:@"MSIRD_ID"];
+                        break;
+                    }
+                }
+                
             }
             
         }else if ([[dicItems allKeys] containsObject:@"MSI_Score"]){
-            MarkSheetItem *markItem = (MarkSheetItem *)[self.sheetItems[nIndex][j] objectAtIndex:0];
-            [dicItems setValue:markItem.Item_Score forKey:@"MSI_Score"];
-            [dicItems removeObjectForKey:@"MSI_Item"];
+            //MarkSheetItem *markItem = (MarkSheetItem *)[self.sheetItems[nIndex][j] objectAtIndex:0];
+            //[dicItems setValue:markItem.Item_Score forKey:@"MSI_Score"];
+            //[dicItems removeObjectForKey:@"MSI_Item"];
         }
     }
     

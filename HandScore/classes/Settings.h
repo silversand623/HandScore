@@ -10,6 +10,7 @@
 
 @interface Settings : UIViewController <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *txtStep;
+@property (weak, nonatomic) IBOutlet UITextField *txtTime;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *scoreMode;
 - (IBAction)saveSetting:(id)sender;
 - (IBAction)exitSetting:(id)sender;

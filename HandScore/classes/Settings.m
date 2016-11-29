@@ -7,6 +7,8 @@
 //
 
 #import "Settings.h"
+#import "TYAppDelegate.h"
+#import "Student.h"
 
 @interface Settings ()
 
@@ -28,8 +30,13 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
-    NSString *step = [defaults objectForKey:@"Step"];
+    NSString *sTime = [defaults objectForKey:@"Time"];
+    [defaults setObject:@"1" forKey:@"Step"];
+    [defaults setObject:@"0" forKey:@"Mode"];
+    
+    
     NSString *sMode = [defaults objectForKey:@"Mode"];
+    NSString *step = [defaults objectForKey:@"Step"];
     if (step != nil) {
         [[self txtStep] setText:step];
     } else {
@@ -39,9 +46,23 @@
         int nSelect = [sMode integerValue];
         [[self scoreMode] setSelectedSegmentIndex:nSelect];
     } else {
-        [[self scoreMode] setSelectedSegmentIndex:0];
+        [[self scoreMode] setSelectedSegmentIndex:1];
     }
-    self.txtStep.delegate = self;
+    //self.txtStep.delegate = self;
+    
+     
+    self.txtTime.delegate = self;
+    
+    [self.txtStep setHidden:YES];
+    [self.scoreMode setHidden:YES];
+    
+    if (sTime != nil) {
+        [[self txtTime] setText:sTime];
+    } else {
+        [[self txtTime] setText:@"1"];
+    }
+    
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,20 +91,40 @@
 - (IBAction)saveSetting:(id)sender {
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
     NSString *step = [[self txtStep] text];
+    NSString *sTime = [[self txtTime] text];
+    
+    
+    TYAppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    Student *Info = (Student*)appDelegate.gStudnetArray[0];
+    
+    NSLocale* local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+    NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+    [formater setLocale: local];
+    [formater setDateFormat:@"MM-dd HH:mm:ss"];
+    NSDateFormatter* formater1 = [[NSDateFormatter alloc] init];
+    [formater1 setLocale: local];
+    [formater1 setDateFormat:@"MM-dd HH:mm:ss"];
+    NSDate* dateStart = [formater1 dateFromString:Info.Exam_StartTime];
+    NSDate* dateEnd = [formater1 dateFromString:Info.Exam_EndTime];
+    NSTimeInterval tmInterval1= [dateEnd timeIntervalSinceDate:dateStart];
+    int nInterval = tmInterval1/60;
+    
+    
     int nSelect = [[self scoreMode] selectedSegmentIndex];
     NSString *sMode = [NSString stringWithFormat:@"%d",nSelect];
-    if ([self isPureFloat:step] || [self isPureInt:step]) {
+    if ([self isPureInt:sTime]) {
         
-        if ([step floatValue] == 0.0 || [step floatValue] > 100.0) {
-            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"输入范围错误" message:@"请输入0.1-100范围内的数字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        if ([sTime intValue] < 1 || [sTime intValue] >= nInterval) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"输入范围错误" message:@"输入时间超出考试时间范围" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
         } else
         {
-        [defaults setObject:step forKey:@"Step"];
-        [defaults setObject:sMode forKey:@"Mode"];
-        [defaults synchronize];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateSet" object:nil];
-        [self dismissViewControllerAnimated:YES completion:nil];
+            [defaults setObject:sTime forKey:@"Time"];
+            [defaults setObject:step forKey:@"Step"];
+            [defaults setObject:sMode forKey:@"Mode"];
+            [defaults synchronize];
+            //[[NSNotificationCenter defaultCenter] postNotificationName:@"updateSet" object:nil];
+            [self dismissViewControllerAnimated:YES completion:nil];
         }
         
     } else {
@@ -102,31 +143,29 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+-(BOOL)validateNumber:(NSString*)number {
+    BOOL res =YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789"];
+    int i =0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i,1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length ==0) {
+            res =NO;
+            break;
+        }
+        i++;
+    }
+    return res;
+}
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     
-    NSMutableString * futureString = [NSMutableString stringWithString:textField.text];
-    
-    [futureString  insertString:string atIndex:range.location];
-    
-    NSInteger flag=0;
-    
-    const NSInteger limited = 1;//小数点后需要限制的个数
-    
-    for (int i = futureString.length-1; i>=0; i--) {
+    //如果是限制只能输入数字的文本框
+    if (_txtTime==textField) {
         
-        if ([futureString characterAtIndex:i] == '.') {
-
-            if (flag > limited) {
-                
-                return NO;
-            }
-            
-            
-            break;
-        }
-        
-        flag++;
+        return [self validateNumber:string];
         
     }
 

@@ -446,49 +446,57 @@ int nMode = 0;
     if (_sheetItems.count > 0) {
         id obj = _sheetItems[nCount][indexPath.section];
         item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
-        cell.ScoreValue.text = item.MSI_Score;
-        
-        //resize the height of label
-        NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        CGRect rect = cell.ScoreItem.frame;
-        rect.size.height = [self getLabelHeight:indexPath];
-        if (iOS8)
-        {
-            [cell.ScoreItem setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
-        } else if (iOS7) {
-            [cell.ScoreItem setFrame:rect];
-        }
-      
-        
-        [cell.ScoreItem setText:content];
-        
         //
-        if (item.rating_value != nil) {
-            if (fabs([item.Item_Score floatValue]) < 0.001f) {
-                cell.Rating.value = 0.0;
-            }else
+        if ([item.Score_Type isEqualToString:@"0"])
+        {
+            cell.ScoreValue.text = item.MSI_Score;
+            
+            //resize the height of label
+            NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            CGRect rect = cell.ScoreItem.frame;
+            rect.size.height = [self getLabelHeight:indexPath];
+            if (iOS8)
             {
-                cell.Rating.value = [item.rating_value floatValue];
+                [cell.ScoreItem setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
+            } else if (iOS7) {
+                [cell.ScoreItem setFrame:rect];
             }
             
-            cell.FinalScore.text = item.Item_Score;
-            //[cell.FinalScore setTextColor:[UIColor blueColor]];
-            [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
-            [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
-            cell.stepValue.value = [item.step_value doubleValue];
-        }else {
-            cell.Rating.value = 0.0;
-            cell.stepValue.value = 0.0;
-            if (bScore) {
-                cell.FinalScore.text = nil;
+            
+            [cell.ScoreItem setText:content];
+            
+            //
+            if (item.rating_value != nil) {
+                if (fabs([item.Item_Score floatValue]) < 0.001f) {
+                    cell.Rating.value = 0.0;
+                }else
+                {
+                    cell.Rating.value = [item.rating_value floatValue];
+                }
                 
-            } else {
-                cell.FinalScore.text = @"请评分";
-                [cell.FinalScore setTextColor:[UIColor redColor]];
-                [cell.FinalScore setFont:[UIFont systemFontOfSize:20.0]];
+                cell.FinalScore.text = item.Item_Score;
+                //[cell.FinalScore setTextColor:[UIColor blueColor]];
+                [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
+                [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
+                cell.stepValue.value = [item.step_value doubleValue];
+            }else {
+                cell.Rating.value = 0.0;
+                cell.stepValue.value = 0.0;
+                if (bScore) {
+                    cell.FinalScore.text = nil;
+                    
+                } else {
+                    cell.FinalScore.text = @"请评分";
+                    [cell.FinalScore setTextColor:[UIColor redColor]];
+                    [cell.FinalScore setFont:[UIFont systemFontOfSize:20.0]];
+                }
+                
             }
+        }else if ([item.Score_Type isEqualToString:@"0"])
+        {
             
         }
+        
         
     }else{
         cell.Rating.value = 0.0;

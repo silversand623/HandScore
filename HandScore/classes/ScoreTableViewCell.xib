@@ -45,6 +45,12 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.023529411760000001" green="0.4823529412" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </slider>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="characterWrap" numberOfLines="0" adjustsFontSizeToFit="NO" id="d8y-pY-WYM" userLabel="Comment">
+                        <rect key="frame" x="912" y="8" width="85" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <view contentMode="scaleToFill" id="Ykm-Gg-o7I" customClass="HCSStarRatingView">
                         <rect key="frame" x="685" y="12" width="224" height="44"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -66,6 +72,7 @@
                 </subviews>
             </tableViewCellContentView>
             <connections>
+                <outlet property="Comment" destination="d8y-pY-WYM" id="sLh-Bd-bwt"/>
                 <outlet property="FinalScore" destination="tdz-9C-OUH" id="lFv-jX-sCE"/>
                 <outlet property="Rating" destination="g0k-cM-2bT" id="Qiu-uN-Psx"/>
                 <outlet property="ScoreItem" destination="Oc1-ud-XhU" id="c2U-we-ANE"/>

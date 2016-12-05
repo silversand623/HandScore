@@ -16,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *FinalScore;
 @property (weak, nonatomic) IBOutlet UISlider *Rating;
 @property (weak, nonatomic) IBOutlet HCSStarRatingView *StarRate;
+@property (weak, nonatomic) IBOutlet UILabel *Comment;
 
 @end

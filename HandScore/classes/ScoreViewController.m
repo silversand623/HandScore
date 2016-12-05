@@ -443,9 +443,7 @@ int nMode = 0;
     
     [cell.stepValue addTarget:self action:@selector(StepperChanged:) forControlEvents:UIControlEventValueChanged];
     
-    //HCSStarRatingView* view = (HCSStarRatingView*)cell.StarRate;
-    
-    //[view addTarget:self action:@selector(didChangeValue:) forControlEvents:UIControlEventValueChanged];
+    [cell.StarRate addTarget:self action:@selector(didChangeValue:) forControlEvents:UIControlEventValueChanged];
     
     MarkSheetItem *item = nil;
     if (_sheetItems.count > 0) {
@@ -476,6 +474,7 @@ int nMode = 0;
             [cell.StarRate setHidden:YES];
             [cell.Rating setHidden:NO];
             [cell.stepValue setHidden:NO];
+            [cell.Comment setHidden:YES];
             
             if (item.rating_value != nil) {
                 if (fabs([item.Item_Score floatValue]) < 0.001f) {
@@ -511,6 +510,21 @@ int nMode = 0;
             [cell.StarRate setHidden:NO];
             [cell.Rating setHidden:YES];
             [cell.stepValue setHidden:YES];
+            [cell.Comment setHidden:NO];
+            cell.StarRate.maximumValue = item.item_detail_list.count;
+            if (item.rating_value != nil)
+            {
+                cell.StarRate.value = [item.rating_value floatValue];
+            }
+            
+        }else if ([item.Score_Type isEqualToString:@"2"])
+        {
+            //
+            [cell.StarRate setHidden:NO];
+            [cell.Rating setHidden:YES];
+            [cell.stepValue setHidden:YES];
+            [cell.Comment setHidden:YES];
+            cell.StarRate.maximumValue = item.item_detail_list.count;
             
         }
         
@@ -519,8 +533,7 @@ int nMode = 0;
         cell.Rating.value = 0.0;
         cell.FinalScore.text = nil;
         cell.stepValue.value = 0.0;
-        
-        //cell.StarRate.value = 0.0;
+        cell.StarRate.value = 0.0;
     }
     
     
@@ -544,7 +557,17 @@ int nMode = 0;
 }
 
 - (void)didChangeValue:(HCSStarRatingView *)sender {
-    NSLog(@"Changed rating to %.1f", sender.value);
+    ScoreTableViewCell *cell = [self getCell:sender];
+    NSIndexPath *path = [self.tableView indexPathForCell:cell];
+    MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
+    int nIndex = (int)sender.value;
+    item.rating_value = [NSString stringWithFormat:@"%d", nIndex];
+    id temp =[item.item_detail_list objectAtIndex:nIndex-1];
+    item.Item_Score = [[temp objectForKey:@"MSIRD_Score"] substringToIndex:3];
+    NSString *comment = [[temp objectForKey:@"MSIRD_Item"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [cell.FinalScore setText:item.Item_Score];
+    [cell.Comment setText:comment];
+    
 }
 
 /**

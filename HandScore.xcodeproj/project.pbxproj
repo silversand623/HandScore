@@ -51,8 +51,6 @@
 		3C3F2F2B1B7085D400CE577F /* user_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3F2F221B7085D400CE577F /* user_icon.png */; };
 		3C3F2F2C1B7085D400CE577F /* user_icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3F2F231B7085D400CE577F /* user_icon1.png */; };
 		3C3F2F2E1B709DFF00CE577F /* border.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C3F2F2D1B709DFF00CE577F /* border.png */; };
-		3C69A4561DF020B200DBE0E7 /* ScoreRateViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C69A4541DF020B200DBE0E7 /* ScoreRateViewCell.m */; };
-		3C69A4571DF020B200DBE0E7 /* ScoreRateViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C69A4551DF020B200DBE0E7 /* ScoreRateViewCell.xib */; };
 		3C872E7519A46575009939D3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C872E7419A46575009939D3 /* Main.storyboard */; };
 		3C872E7819A46D48009939D3 /* main_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C872E7619A46D48009939D3 /* main_view.png */; };
 		3C872E7919A46D48009939D3 /* score_view.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C872E7719A46D48009939D3 /* score_view.png */; };
@@ -164,9 +162,6 @@
 		3C3F2F221B7085D400CE577F /* user_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_icon.png; sourceTree = "<group>"; };
 		3C3F2F231B7085D400CE577F /* user_icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user_icon1.png; sourceTree = "<group>"; };
 		3C3F2F2D1B709DFF00CE577F /* border.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = border.png; sourceTree = "<group>"; };
-		3C69A4531DF020B200DBE0E7 /* ScoreRateViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreRateViewCell.h; sourceTree = "<group>"; };
-		3C69A4541DF020B200DBE0E7 /* ScoreRateViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreRateViewCell.m; sourceTree = "<group>"; };
-		3C69A4551DF020B200DBE0E7 /* ScoreRateViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ScoreRateViewCell.xib; sourceTree = "<group>"; };
 		3C872E7419A46575009939D3 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		3C872E7619A46D48009939D3 /* main_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = main_view.png; sourceTree = "<group>"; };
 		3C872E7719A46D48009939D3 /* score_view.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = score_view.png; sourceTree = "<group>"; };
@@ -365,9 +360,6 @@
 				3CAF4C231A1DD9A50030B7F5 /* Settings.h */,
 				3CAF4C241A1DD9A50030B7F5 /* Settings.m */,
 				3CAF4C251A1DD9A50030B7F5 /* Settings.xib */,
-				3C69A4531DF020B200DBE0E7 /* ScoreRateViewCell.h */,
-				3C69A4541DF020B200DBE0E7 /* ScoreRateViewCell.m */,
-				3C69A4551DF020B200DBE0E7 /* ScoreRateViewCell.xib */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -640,7 +632,6 @@
 				3C04C3CC197FCA0500154F21 /* scorebtntemple.png in Resources */,
 				3C242F91197FAFEF00E4EF16 /* scoring3.png in Resources */,
 				3C04C3C5197FC9F800154F21 /* fontbtna.png in Resources */,
-				3C69A4571DF020B200DBE0E7 /* ScoreRateViewCell.xib in Resources */,
 				3CAE4FDD191CD50800870909 /* InfoPlist.strings in Resources */,
 				3CA9ACDC1A1F371200C9F04C /* setting.png in Resources */,
 				3C242F89197FAFEF00E4EF16 /* btnduis.png in Resources */,
@@ -728,7 +719,6 @@
 				3CABBB4019AF38030042858B /* PopSignUtil.m in Sources */,
 				3CAE260119AB3D1A00F8C4C6 /* MarkSheetItem.m in Sources */,
 				3CAE4FE3191CD50800870909 /* TYAppDelegate.m in Sources */,
-				3C69A4561DF020B200DBE0E7 /* ScoreRateViewCell.m in Sources */,
 				3CA758F119A71F3900C2ACF6 /* ScoreViewController.m in Sources */,
 				3CABDE7719A5787000F3F250 /* WTDataSaver.m in Sources */,
 				3CABDEB019A5BAAB00F3F250 /* StudentList.m in Sources */,

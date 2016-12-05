@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+@class HCSStarRatingView;
 @interface ScoreTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *ScoreItem;
 @property (weak, nonatomic) IBOutlet UILabel *ScoreValue;
 @property (weak, nonatomic) IBOutlet UIStepper *stepValue;
 @property (weak, nonatomic) IBOutlet UILabel *FinalScore;
 @property (weak, nonatomic) IBOutlet UISlider *Rating;
+@property (weak, nonatomic) IBOutlet HCSStarRatingView *StarRate;
 
 @end

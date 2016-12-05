@@ -101,6 +101,7 @@
 		3CAF4C271A1DD9A50030B7F5 /* Settings.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3CAF4C251A1DD9A50030B7F5 /* Settings.xib */; };
 		3CBA804419F7431B007B18E8 /* studentphoto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3CBA804319F7431B007B18E8 /* studentphoto.jpg */; };
 		3CC4ACAF19483B97007C58D2 /* libiconv.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CC4ACAE19483B97007C58D2 /* libiconv.2.dylib */; };
+		3CE0DB2D1DF55ECE00935A22 /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE0DB2C1DF55ECE00935A22 /* HCSStarRatingView.m */; };
 		3CE0EC71193875B700CBB8AB /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0EC70193875B700CBB8AB /* CFNetwork.framework */; };
 		3CE0EC73193875CB00CBB8AB /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0EC72193875CB00CBB8AB /* Security.framework */; };
 		3CE0EC75193875DC00CBB8AB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE0EC74193875DC00CBB8AB /* SystemConfiguration.framework */; };
@@ -241,6 +242,8 @@
 		3CBA804319F7431B007B18E8 /* studentphoto.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = studentphoto.jpg; sourceTree = "<group>"; };
 		3CC4ACAC19483B70007C58D2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3CC4ACAE19483B97007C58D2 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = usr/lib/libiconv.2.dylib; sourceTree = SDKROOT; };
+		3CE0DB2B1DF55ECE00935A22 /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
+		3CE0DB2C1DF55ECE00935A22 /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
 		3CE0EC70193875B700CBB8AB /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3CE0EC72193875CB00CBB8AB /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		3CE0EC74193875DC00CBB8AB /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -336,6 +339,8 @@
 		3C872E7D19A48DB5009939D3 /* classes */ = {
 			isa = PBXGroup;
 			children = (
+				3CE0DB2B1DF55ECE00935A22 /* HCSStarRatingView.h */,
+				3CE0DB2C1DF55ECE00935A22 /* HCSStarRatingView.m */,
 				3CABDE8019A58EF900F3F250 /* LoginViewController.h */,
 				3CABDE8119A58EF900F3F250 /* LoginViewController.m */,
 				3CA758E819A6D32100C2ACF6 /* UMTableViewCell.xib */,
@@ -719,6 +724,7 @@
 				3CABBB3F19AF38030042858B /* DrawSignView.m in Sources */,
 				3CABDE8719A58EF900F3F250 /* UMTableViewCell.m in Sources */,
 				3CABDE7819A5787000F3F250 /* WTRequestCenter.m in Sources */,
+				3CE0DB2D1DF55ECE00935A22 /* HCSStarRatingView.m in Sources */,
 				3CABBB4019AF38030042858B /* PopSignUtil.m in Sources */,
 				3CAE260119AB3D1A00F8C4C6 /* MarkSheetItem.m in Sources */,
 				3CAE4FE3191CD50800870909 /* TYAppDelegate.m in Sources */,

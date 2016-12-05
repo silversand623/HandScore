@@ -22,6 +22,7 @@
 #import "Settings.h"
 #import "MJExtension.h"
 #import <math.h>
+#import "HCSStarRatingView.h"
 
 #define SCORECELLID @"ScoreCell"
 
@@ -442,30 +443,40 @@ int nMode = 0;
     
     [cell.stepValue addTarget:self action:@selector(StepperChanged:) forControlEvents:UIControlEventValueChanged];
     
+    //HCSStarRatingView* view = (HCSStarRatingView*)cell.StarRate;
+    
+    //[view addTarget:self action:@selector(didChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
     MarkSheetItem *item = nil;
     if (_sheetItems.count > 0) {
         id obj = _sheetItems[nCount][indexPath.section];
         item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
         //
+        
+        
+        cell.ScoreValue.text = item.MSI_Score;
+        
+        //resize the height of label
+        NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        CGRect rect = cell.ScoreItem.frame;
+        rect.size.height = [self getLabelHeight:indexPath];
+        if (iOS8)
+        {
+            [cell.ScoreItem setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
+        } else if (iOS7) {
+            [cell.ScoreItem setFrame:rect];
+        }
+        
+        
+        [cell.ScoreItem setText:content];
+        
         if ([item.Score_Type isEqualToString:@"0"])
         {
-            cell.ScoreValue.text = item.MSI_Score;
-            
-            //resize the height of label
-            NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            CGRect rect = cell.ScoreItem.frame;
-            rect.size.height = [self getLabelHeight:indexPath];
-            if (iOS8)
-            {
-                [cell.ScoreItem setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
-            } else if (iOS7) {
-                [cell.ScoreItem setFrame:rect];
-            }
-            
-            
-            [cell.ScoreItem setText:content];
-            
             //
+            [cell.StarRate setHidden:YES];
+            [cell.Rating setHidden:NO];
+            [cell.stepValue setHidden:NO];
+            
             if (item.rating_value != nil) {
                 if (fabs([item.Item_Score floatValue]) < 0.001f) {
                     cell.Rating.value = 0.0;
@@ -475,7 +486,6 @@ int nMode = 0;
                 }
                 
                 cell.FinalScore.text = item.Item_Score;
-                //[cell.FinalScore setTextColor:[UIColor blueColor]];
                 [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
                 [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
                 cell.stepValue.value = [item.step_value doubleValue];
@@ -492,8 +502,15 @@ int nMode = 0;
                 }
                 
             }
-        }else if ([item.Score_Type isEqualToString:@"0"])
+            
+            
+            
+        }else if ([item.Score_Type isEqualToString:@"1"])
         {
+            //
+            [cell.StarRate setHidden:NO];
+            [cell.Rating setHidden:YES];
+            [cell.stepValue setHidden:YES];
             
         }
         
@@ -502,6 +519,8 @@ int nMode = 0;
         cell.Rating.value = 0.0;
         cell.FinalScore.text = nil;
         cell.stepValue.value = 0.0;
+        
+        //cell.StarRate.value = 0.0;
     }
     
     
@@ -522,6 +541,10 @@ int nMode = 0;
     });
     [header.textLabel setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     
+}
+
+- (void)didChangeValue:(HCSStarRatingView *)sender {
+    NSLog(@"Changed rating to %.1f", sender.value);
 }
 
 /**

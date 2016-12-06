@@ -37,6 +37,7 @@ int nCount = 0;
 bool bScore = YES;
 double dStep = 1.0;
 int nMode = 0;
+bool bScoreRule = NO;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -116,6 +117,8 @@ int nMode = 0;
     } else {
         nMode = 0;
     }
+    
+    _bZero = NO;
 }
 
 -(void)getTotalSum {
@@ -134,6 +137,10 @@ int nMode = 0;
         for (MarkSheetItem *item in obj) {
             nSum += [item.Item_Score floatValue];
         }
+    }
+    if (_bZero==YES)
+    {
+        nSum = 0.0;
     }
     [_Actual setText:[NSString stringWithFormat:@"%.f", nSum]];
 }
@@ -207,6 +214,12 @@ int nMode = 0;
     [cell.FinalScore setText:item.Item_Score];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.Comment setText:comment];
+    if (nIndex == 0 && bScoreRule==NO) {
+        _bZero = YES;
+    }else
+    {
+        _bZero = NO;
+    }
     [self getSum];
 }
 
@@ -308,6 +321,10 @@ int nMode = 0;
                                                       [self.sections addObject:[NSMutableArray array]];
                                                       NSDictionary *dicList = [mark_list objectAtIndex:i];
                                                       [self.markSheets addObject:[[dicList objectForKey:@"MS_Name"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+                                                      if ([[dicList objectForKey:@"MarkSheetNumber2"] isEqualToString:@"0"])
+                                                      {
+                                                          bScoreRule = YES;//成绩累计
+                                                      }
                                                       NSArray *mark_sheet_items = [dicList objectForKey:@"item_list"];
                                                       for (int j=0; j<mark_sheet_items.count; j++) {
                                                           NSDictionary *dicItems = [mark_sheet_items objectAtIndex:j];
@@ -803,6 +820,7 @@ int nMode = 0;
     previewController.markSheets = self.markSheets;
     previewController.dataMarkSheet = [NSMutableDictionary dictionaryWithDictionary:self.dataMarkSheet];
     previewController.nTag = 1;
+    previewController.bZero = _bZero;
     TYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     previewController.imgPath = appDelegate.gImgPath;
     appDelegate.gImgPath = nil;

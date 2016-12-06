@@ -569,6 +569,10 @@ int nIndex = 0;
             nSum += [item.Item_Score floatValue];
         }
     }
+    if (_bZero==YES)
+    {
+        nSum = 0.0;
+    }
     return nSum;
 }
 

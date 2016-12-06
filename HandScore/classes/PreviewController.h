@@ -36,5 +36,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *labelClassName;
 @property (weak, nonatomic) IBOutlet UILabel *TotalSum;
 @property (weak, nonatomic) IBOutlet UILabel *actureScore;
-
+@property BOOL bZero;
 @end

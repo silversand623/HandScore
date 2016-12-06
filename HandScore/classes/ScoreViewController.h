@@ -42,6 +42,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *Total;
 
 @property (weak, nonatomic) IBOutlet UILabel *Actual;
+@property BOOL bZero;
 - (IBAction)showInfo:(id)sender;
 
 typedef enum

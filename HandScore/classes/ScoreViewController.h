@@ -39,7 +39,9 @@
 - (IBAction)setSetings:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnShowInfo;
 - (IBAction)getSwitch:(UISwitch*)sender;
+@property (weak, nonatomic) IBOutlet UILabel *Total;
 
+@property (weak, nonatomic) IBOutlet UILabel *Actual;
 - (IBAction)showInfo:(id)sender;
 
 typedef enum

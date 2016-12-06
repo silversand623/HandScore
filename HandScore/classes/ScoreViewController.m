@@ -100,6 +100,7 @@ int nMode = 0;
         _comView.textField.text = _markSheets[nCount];
         [_comView.dropTableView reloadData];
         [[self MarkSheetName] setText:_markSheets[0]];
+        [self getTotalSum];
     }
     
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
@@ -115,6 +116,26 @@ int nMode = 0;
     } else {
         nMode = 0;
     }
+}
+
+-(void)getTotalSum {
+    float nSum = 0.0;
+    for (NSArray *obj in [_sheetItems objectAtIndex:0]) {
+        for (MarkSheetItem *item in obj) {
+            nSum += [item.MSI_Score floatValue];
+        }
+    }
+    [_Total setText:[NSString stringWithFormat:@"%.f", nSum]];
+}
+
+-(void)getSum {
+    float nSum = 0.0;
+    for (NSArray *obj in [_sheetItems objectAtIndex:0]) {
+        for (MarkSheetItem *item in obj) {
+            nSum += [item.Item_Score floatValue];
+        }
+    }
+    [_Actual setText:[NSString stringWithFormat:@"%.f", nSum]];
 }
 
 /**
@@ -186,6 +207,7 @@ int nMode = 0;
     [cell.FinalScore setText:item.Item_Score];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.Comment setText:comment];
+    [self getSum];
 }
 
 /**
@@ -326,6 +348,9 @@ int nMode = 0;
                                                   [self setState:nMode step:dStep];
                                                   
                                                   [[self tableView] reloadData];
+                                                  
+                                                  [self getTotalSum];
+                                                  
                                                   ////
                                               }
                                           }
@@ -604,7 +629,7 @@ int nMode = 0;
     [cell.FinalScore setText:item.Item_Score];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.Comment setText:comment];
-    
+    [self getSum];
 }
 
 /**
@@ -648,6 +673,7 @@ int nMode = 0;
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
+    [self getSum];
 }
 
 /**
@@ -682,6 +708,7 @@ int nMode = 0;
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
+    [self getSum];
 }
 
 /**
@@ -710,6 +737,7 @@ int nMode = 0;
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
+    [self getSum];
 }
 
 - (ScoreTableViewCell *)getCell:(id)obj

@@ -8,12 +8,14 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScoreViewController">
             <connections>
+                <outlet property="Actual" destination="6U2-Qj-6UW" id="xjn-vL-lEi"/>
                 <outlet property="ExamName" destination="OQd-1E-U2c" id="MMS-KH-VLg"/>
                 <outlet property="MarkSheetName" destination="D0J-Zq-irg" id="DtV-YV-7Md"/>
                 <outlet property="RoomName" destination="bH4-Tg-Ckm" id="nD5-DK-DVu"/>
                 <outlet property="ScoreItems" destination="Ys6-EX-fhb" id="VF0-7b-Kzd"/>
                 <outlet property="StationName" destination="RFU-oo-k3w" id="i0c-Nm-TUQ"/>
                 <outlet property="StudentNo" destination="4G1-hX-Wch" id="672-Gu-zPf"/>
+                <outlet property="Total" destination="DFv-xw-ZaO" id="JtJ-EB-5kl"/>
                 <outlet property="previewBtn" destination="pxw-rH-9EA" id="7a6-3S-2nx"/>
                 <outlet property="returnBtn" destination="HOl-z8-1wP" id="DnU-e0-Mpr"/>
                 <outlet property="tableView" destination="qba-jU-71L" id="9hg-KZ-Be0"/>
@@ -219,6 +221,7 @@
                     <rect key="frame" x="725" y="143" width="80" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>

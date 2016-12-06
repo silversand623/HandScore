@@ -38,6 +38,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *MarkSheetName;
 - (IBAction)setSetings:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *btnShowInfo;
+- (IBAction)getSwitch:(UISwitch*)sender;
 
 - (IBAction)showInfo:(id)sender;
 

@@ -167,6 +167,27 @@ int nMode = 0;
     [self setState:nMode step:dStep];
 }
 
+- (IBAction)getSwitch:(UISwitch*)sender
+{
+    ScoreTableViewCell *cell = [self getCell:sender];
+    NSIndexPath *path = [self.tableView indexPathForCell:cell];
+    MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
+    int nIndex = 0;
+    if (sender.on) {
+        nIndex = 1;
+    }else
+    {
+        nIndex = 0;
+    }
+    item.rating_value = [NSString stringWithFormat:@"%d", nIndex];
+    id temp =[item.item_detail_list objectAtIndex:nIndex];
+    item.Item_Score = [temp objectForKey:@"MSIRD_Score"];
+    NSString *comment = [[temp objectForKey:@"MSIRD_Item"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    [cell.FinalScore setText:item.Item_Score];
+    [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
+    [cell.Comment setText:comment];
+}
+
 /**
  *  设置状态和步长
  *
@@ -465,6 +486,16 @@ int nMode = 0;
             [cell.ScoreItem setFrame:rect];
         }
         
+        if (item.rating_value == nil) {
+            if (bScore) {
+                cell.FinalScore.text = nil;
+                
+            } else {
+                cell.FinalScore.text = @"请评分";
+                [cell.FinalScore setTextColor:[UIColor redColor]];
+                [cell.FinalScore setFont:[UIFont systemFontOfSize:20.0]];
+            }
+        }
         
         [cell.ScoreItem setText:content];
         
@@ -475,6 +506,7 @@ int nMode = 0;
             [cell.Rating setHidden:NO];
             [cell.stepValue setHidden:NO];
             [cell.Comment setHidden:YES];
+            [cell.scoreSwitch setHidden:YES];
             
             if (item.rating_value != nil) {
                 if (fabs([item.Item_Score floatValue]) < 0.001f) {
@@ -508,9 +540,12 @@ int nMode = 0;
         {
             //
             [cell.StarRate setHidden:NO];
+            //[cell.StarRate alig;
+            
             [cell.Rating setHidden:YES];
             [cell.stepValue setHidden:YES];
             [cell.Comment setHidden:NO];
+            [cell.scoreSwitch setHidden:YES];
             cell.StarRate.maximumValue = item.item_detail_list.count;
             if (item.rating_value != nil)
             {
@@ -520,11 +555,12 @@ int nMode = 0;
         }else if ([item.Score_Type isEqualToString:@"2"])
         {
             //
-            [cell.StarRate setHidden:NO];
+            [cell.StarRate setHidden:YES];
             [cell.Rating setHidden:YES];
             [cell.stepValue setHidden:YES];
-            [cell.Comment setHidden:YES];
-            cell.StarRate.maximumValue = item.item_detail_list.count;
+            [cell.Comment setHidden:NO];
+            [cell.scoreSwitch setHidden:NO];
+            //cell.StarRate.maximumValue = item.item_detail_list.count;
             
         }
         
@@ -563,9 +599,10 @@ int nMode = 0;
     int nIndex = (int)sender.value;
     item.rating_value = [NSString stringWithFormat:@"%d", nIndex];
     id temp =[item.item_detail_list objectAtIndex:nIndex-1];
-    item.Item_Score = [[temp objectForKey:@"MSIRD_Score"] substringToIndex:3];
+    item.Item_Score = [temp objectForKey:@"MSIRD_Score"];
     NSString *comment = [[temp objectForKey:@"MSIRD_Item"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     [cell.FinalScore setText:item.Item_Score];
+    [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.Comment setText:comment];
     
 }

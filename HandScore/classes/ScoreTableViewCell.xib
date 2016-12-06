@@ -29,7 +29,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="tdz-9C-OUH" userLabel="FinalScore">
-                        <rect key="frame" x="590" y="9" width="85" height="40"/>
+                        <rect key="frame" x="590" y="9" width="90" height="40"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <fontDescription key="fontDescription" type="system" pointSize="25"/>
                         <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -40,7 +40,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.023529411760000001" green="0.4823529412" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </stepper>
-                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="g0k-cM-2bT">
+                    <slider autoresizesSubviews="NO" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" id="g0k-cM-2bT">
                         <rect key="frame" x="685" y="12" width="163" height="34"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <color key="tintColor" red="0.023529411760000001" green="0.4823529412" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -51,9 +51,16 @@
                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="yF6-nO-Txn">
+                        <rect key="frame" x="780" y="14" width="51" height="31"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                        <connections>
+                            <action selector="getSwitch:" destination="-1" eventType="valueChanged" id="wgr-IL-FfN"/>
+                        </connections>
+                    </switch>
                     <view contentMode="scaleToFill" id="Ykm-Gg-o7I" customClass="HCSStarRatingView">
-                        <rect key="frame" x="685" y="12" width="224" height="44"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <rect key="frame" x="680" y="8" width="224" height="44"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="maximumValue">
                                 <integer key="value" value="5"/>
@@ -78,6 +85,7 @@
                 <outlet property="ScoreItem" destination="Oc1-ud-XhU" id="c2U-we-ANE"/>
                 <outlet property="ScoreValue" destination="P8B-8I-ap2" id="IVH-1j-2V0"/>
                 <outlet property="StarRate" destination="Ykm-Gg-o7I" id="aRo-PA-r50"/>
+                <outlet property="scoreSwitch" destination="yF6-nO-Txn" id="cir-bQ-Xhi"/>
                 <outlet property="stepValue" destination="anI-SN-kA2" id="ycv-MC-YRE"/>
             </connections>
         </tableViewCell>

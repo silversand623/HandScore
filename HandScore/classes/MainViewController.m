@@ -32,6 +32,7 @@
     NSMutableArray *FilterStudentArray;
     NSArray *StatusArray;
     MBProgressHUD *HUD;
+    BOOL bRefresh;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -86,17 +87,21 @@
     
     [self getMarkSheetInfo];
     
-    _myTimer = [NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(HighlightItem) userInfo:nil repeats:YES];
+    _myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(HighlightItem) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_myTimer forMode:NSRunLoopCommonModes];
+    bRefresh = true;
+    [self checkNextStudent];
     
 }
 
 -(void)HighlightItem
 {
-    if (StudentArray.count>0) {
+    if (StudentArray.count>0 && bRefresh) {
         [self checkNextStudent];
+        
+        bRefresh = false;
     }
-    [self.tableView reloadData];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -198,16 +203,28 @@
                                       [HUD hide:YES];
                                       NSString *nsTime = [[NSString alloc] initWithData:data  encoding:NSUTF8StringEncoding];
                                       //NSString *nsCompare = [nsTime substringFromIndex:10];
-                                      NSLocale* local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
+                                      //NSLocale* local =[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
                                       NSDateFormatter* formater = [[NSDateFormatter alloc] init];
-                                      [formater setLocale: local];
+                                      //[formater setLocale: local];
                                       [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
                                       NSDateFormatter* formater1 = [[NSDateFormatter alloc] init];
-                                      [formater1 setLocale: local];
+                                      //[formater1 setLocale: local];
                                       [formater1 setDateFormat:@"yyyy-MM-dd HH:mm"];
                                       NSDate* dateSystem = [formater dateFromString:nsTime];
+                                      BOOL bTag = false;
                                       for (int k=0; k<StudentArray.count; k++) {
                                           Student *Info = StudentArray[k];
+                                          if (bTag)
+                                          {
+                                              if (![_sNext isEqualToString:Info.U_ID])
+                                              {
+                                                  _sNext = Info.U_ID;
+                                                  bRefresh=true;
+                                                  [self.tableView reloadData];
+                                                  
+                                              }
+                                              break;
+                                          }
                                           NSString* nsStart = [[nsTime substringToIndex:5] stringByAppendingString:[Info.Exam_StartTime substringToIndex:11]];
                                           NSDate* dateStart = [formater1 dateFromString:nsStart];
                                           NSString* nsEnd = [[nsTime substringToIndex:5] stringByAppendingString:[Info.Exam_EndTime substringToIndex:11]];
@@ -217,12 +234,21 @@
                                           
                                           
                                           if (tmInterval1 >= 0.0 && tmInterval2 >= 0.0) {
-                                              
+                                              bTag = true;
                                               
                                           } else if (tmInterval1 < 0.0)
                                           {
-                                              _sNext = Info.U_ID;
-                                              break;
+                                              if (!bTag)
+                                              {
+                                                  if (![_sNext isEqualToString:Info.U_ID])
+                                                  {
+                                                      _sNext = Info.U_ID;
+                                                      bRefresh=true;
+                                                      [self.tableView reloadData];
+                                                      
+                                                  }
+                                                  break;
+                                              }
                                           } else if (tmInterval2 < 0.0)
                                           {
                                               

@@ -453,6 +453,23 @@ long lTime = 0;
     return 60;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (_sheetItems.count > 0) {
+        
+        //NSString *content = [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *content = @"奥斯卡级打法是否可奥斯卡及地方撒了开发奥斯卡积分打算离开；发送了；卡刷卡福利大师傅就卡的身份案例看世界发达时刻就发生科技发生了开发了快速；剪发卡时间了垃圾收福利卡手机费爱上浪费的空间按时付款了大师及福利卡时间了；按时交付的绿卡手机发送看来就爱上离开；按时交付的考拉说法都是老会计法拉数据的发生了咖啡加大了说开发商可交付拉就是的罚款了手机费";
+        CGFloat contentWidth = 1024;
+        // 用何種字體進行顯示
+        UIFont *font = [UIFont systemFontOfSize:20];
+        
+        // 計算出顯示完內容需要的最小尺寸
+        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
+        return MAX(size.height, 0)+23;
+    }
+    return 23;
+}
+
 -(CGFloat)getLabelHeight:(NSIndexPath *)indexPath {
     // 列寬
     CGFloat contentWidth = 480;
@@ -469,23 +486,6 @@ long lTime = 0;
     return MAX(size.height, 40)+20;
 }
 
-- (CGFloat)getLabelHeight22:(NSIndexPath *)indexPath
-{
-    id obj = _sheetItems[nCount][indexPath.section];
-    MarkSheetItem *item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
-    
-    // 該行要顯示的內容
-    NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc]init];
-    paragraphStyle.lineBreakMode=NSLineBreakByWordWrapping;
-    NSDictionary* attributes =@{NSFontAttributeName:[UIFont systemFontOfSize:20],NSParagraphStyleAttributeName:paragraphStyle.copy};
-    CGSize labelSize = [content boundingRectWithSize:CGSizeMake(1000,1000) options:NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading|NSStringDrawingTruncatesLastVisibleLine attributes:attributes context:nil].size;
-    //[paragraphStyle release];
-    labelSize.height=ceil(labelSize.height);
-    //labelSize.width=ceil(labelSize.width);
-    return MAX(labelSize.height, 40)+20;
-}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     if (_sheetItems.count > 0) {
@@ -506,7 +506,8 @@ long lTime = 0;
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (_sections.count > 0) {
-        return [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        //return [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return @"奥斯卡级打法是否可奥斯卡及地方撒了开发奥斯卡积分打算离开；发送了；卡刷卡福利大师傅就卡的身份案例看世界发达时刻就发生科技发生了开发了快速；剪发卡时间了垃圾收福利卡手机费爱上浪费的空间按时付款了大师及福利卡时间了；按时交付的绿卡手机发送看来就爱上离开；按时交付的考拉说法都是老会计法拉数据的发生了咖啡加大了说开发商可交付拉就是的罚款了手机费";
     } else {
         return @"";
     }
@@ -658,6 +659,8 @@ long lTime = 0;
         view1;
     });
     [header.textLabel setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
+    [header.textLabel setNumberOfLines:0];
+    [header.textLabel setLineBreakMode:NSLineBreakByWordWrapping];
     
 }
 

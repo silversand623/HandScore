@@ -23,6 +23,9 @@
 #import "MJExtension.h"
 #import <math.h>
 #import "HCSStarRatingView.h"
+#import <UIKit/UIKit.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import <MediaPlayer/MediaPlayer.h>
 
 #define SCORECELLID @"ScoreCell"
 
@@ -38,6 +41,7 @@ bool bScore = YES;
 double dStep = 1.0;
 int nMode = 0;
 bool bScoreRule = NO;
+long lTime = 0;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -119,6 +123,29 @@ bool bScoreRule = NO;
     }
     
     _bZero = NO;
+    
+    _myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(Beep) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:_myTimer forMode:NSRunLoopCommonModes];
+}
+
+-(void)Beep
+{
+    lTime++;
+    if (lTime > _nElapseTime)
+    {
+        [_myTimer invalidate];
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您设置的评分提醒时间已到，请尽快完成评分！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        
+        
+        //定义一个SystemSoundID
+        SystemSoundID soundID = 1005;//具体参数详情下面贴出来
+        //播放声音
+        AudioServicesPlaySystemSound(soundID);
+        
+        _nElapseTime = 0;
+    }
+    
 }
 
 -(void)getTotalSum {

@@ -41,6 +41,10 @@
 - (IBAction)getSwitch:(UISwitch*)sender;
 @property (weak, nonatomic) IBOutlet UILabel *Total;
 
+@property NSInteger nElapseTime; //剩余时间，秒为单位
+
+@property (strong, nonatomic) NSTimer *myTimer;
+
 @property (weak, nonatomic) IBOutlet UILabel *Actual;
 @property BOOL bZero;
 - (IBAction)showInfo:(id)sender;

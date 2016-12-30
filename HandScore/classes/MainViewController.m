@@ -33,6 +33,7 @@
     NSArray *StatusArray;
     MBProgressHUD *HUD;
     BOOL bRefresh;
+    NSInteger nTime;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -301,11 +302,14 @@
                                       
                                       TYAppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
                                       appDelegate.gStudentId = Info.U_ID;
-                                      
+                                      NSString *sTemp = [defaults objectForKey:@"Time"];
+                                      float fTemp = [sTemp floatValue]*60;
+                                      nTime = (tmInterval2-fTemp);
                                       if (tmInterval1 >= 0.0 && tmInterval2 >= 0.0) {
                                           
                                           ScoreViewController *scoreViewController=[[ScoreViewController alloc]init];
                                           scoreViewController.loginItem = appDelegate.gLoginItem;
+                                          scoreViewController.nElapseTime = nTime;
                                           [self presentViewController:scoreViewController animated:YES completion:nil];
                                       } else if (tmInterval1 < 0.0)
                                       {
@@ -334,6 +338,7 @@
         TYAppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
         ScoreViewController *scoreViewController=[[ScoreViewController alloc]init];
         scoreViewController.loginItem = appDelegate.gLoginItem;
+        scoreViewController.nElapseTime = nTime;
         [self presentViewController:scoreViewController animated:YES completion:nil];
         
     }

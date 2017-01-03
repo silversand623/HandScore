@@ -445,7 +445,10 @@ long lTime = 0;
     
     
     if (_sheetItems.count > 0) {
-        return [self getLabelHeight:indexPath];
+        id obj = _sheetItems[nCount][indexPath.section];
+        MarkSheetItem *item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
+        NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return [self getLabelHeight:content widthIs:480];
     }
     
     
@@ -453,36 +456,24 @@ long lTime = 0;
     return 60;
 }
 
+
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if (_sheetItems.count > 0) {
+    if (_sections.count > 0) {
         
-        //NSString *content = [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSString *content = @"奥斯卡级打法是否可奥斯卡及地方撒了开发奥斯卡积分打算离开；发送了；卡刷卡福利大师傅就卡的身份案例看世界发达时刻就发生科技发生了开发了快速；剪发卡时间了垃圾收福利卡手机费爱上浪费的空间按时付款了大师及福利卡时间了；按时交付的绿卡手机发送看来就爱上离开；按时交付的考拉说法都是老会计法拉数据的发生了咖啡加大了说开发商可交付拉就是的罚款了手机费";
-        CGFloat contentWidth = 1024;
-        // 用何種字體進行顯示
-        UIFont *font = [UIFont systemFontOfSize:20];
-        
-        // 計算出顯示完內容需要的最小尺寸
-        CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
-        return MAX(size.height, 0)+23;
+        NSString *content = [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return [self getLabelHeight:content widthIs:1000];
     }
     return 23;
 }
 
--(CGFloat)getLabelHeight:(NSIndexPath *)indexPath {
-    // 列寬
-    CGFloat contentWidth = 480;
+
+-(CGFloat)getLabelHeight:(NSString *)content widthIs:(CGFloat)width {
     // 用何種字體進行顯示
     UIFont *font = [UIFont systemFontOfSize:20];
     
-    id obj = _sheetItems[nCount][indexPath.section];
-    MarkSheetItem *item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
-    
-    // 該行要顯示的內容
-    NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     // 計算出顯示完內容需要的最小尺寸
-    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(width, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
     return MAX(size.height, 40)+20;
 }
 
@@ -504,6 +495,7 @@ long lTime = 0;
     }
 }
 
+/*
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     if (_sections.count > 0) {
         //return [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -511,6 +503,32 @@ long lTime = 0;
     } else {
         return @"";
     }
+}
+*/
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CGFloat height = 0;
+    NSString *content=@"";
+    if (_sections.count > 0)
+    {
+        content = [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        height = [self getLabelHeight:content widthIs:1000];
+    }
+    UIView * v = [[UIView alloc] init];
+    v.frame = CGRectMake(0, 0, tableView.frame.size.width, height);
+    v.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+    
+    UILabel * label = [[UILabel alloc] init];
+    label.numberOfLines=0;
+    label.lineBreakMode=NSLineBreakByWordWrapping;
+    label.frame = CGRectMake(10, 0, tableView.frame.size.width, height);
+    label.text = content;
+    [label setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
+    label.font = [UIFont systemFontOfSize:20];
+    [v addSubview:label];
+    
+    
+    return v;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -548,7 +566,7 @@ long lTime = 0;
         //resize the height of label
         NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGRect rect = cell.ScoreItem.frame;
-        rect.size.height = [self getLabelHeight:indexPath];
+        rect.size.height = [self getLabelHeight:content widthIs:480];
         if (iOS8)
         {
             [cell.ScoreItem setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
@@ -648,6 +666,7 @@ long lTime = 0;
     
 }
 
+/*
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     
@@ -661,8 +680,10 @@ long lTime = 0;
     [header.textLabel setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [header.textLabel setNumberOfLines:0];
     [header.textLabel setLineBreakMode:NSLineBreakByWordWrapping];
+    [header.detailTextLabel setText:[self tableView: tableView titleForHeaderInSection: section]];
     
 }
+*/
 
 - (void)didChangeValue:(HCSStarRatingView *)sender {
     ScoreTableViewCell *cell = [self getCell:sender];

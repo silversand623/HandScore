@@ -88,7 +88,7 @@
     
     [self getMarkSheetInfo];
     
-    _myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(HighlightItem) userInfo:nil repeats:YES];
+    _myTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(HighlightItem) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_myTimer forMode:NSRunLoopCommonModes];
     bRefresh = true;
     [self checkNextStudent];
@@ -97,10 +97,8 @@
 
 -(void)HighlightItem
 {
-    if (StudentArray.count>0 && bRefresh) {
+    if (StudentArray.count>0) {
         [self checkNextStudent];
-        
-        bRefresh = false;
     }
     
 }

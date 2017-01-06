@@ -595,6 +595,7 @@ long lTime = 0;
             [cell.stepValue setHidden:NO];
             [cell.Comment setHidden:YES];
             [cell.scoreSwitch setHidden:YES];
+            [cell.FinalScore setText:@""];
             
             if (item.rating_value != nil) {
                 if (fabs([item.Item_Score floatValue]) < 0.001f) {
@@ -628,16 +629,29 @@ long lTime = 0;
         {
             //
             [cell.StarRate setHidden:NO];
-            //[cell.StarRate alig;
             
             [cell.Rating setHidden:YES];
             [cell.stepValue setHidden:YES];
             [cell.Comment setHidden:NO];
             [cell.scoreSwitch setHidden:YES];
             cell.StarRate.maximumValue = item.item_detail_list.count;
+            [cell.Comment setText:@""];
+            [cell.FinalScore setText:@""];
+            
             if (item.rating_value != nil)
             {
                 cell.StarRate.value = [item.rating_value floatValue];
+                cell.FinalScore.text = item.Item_Score;
+                [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
+                [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
+                int nIndex = [item.rating_value intValue];
+                if (nIndex >=1)
+                {
+                    id temp =[item.item_detail_list objectAtIndex:nIndex-1];
+                    item.Item_Score = [temp objectForKey:@"MSIRD_Score"];
+                    NSString *comment = [[temp objectForKey:@"MSIRD_Item"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                    [cell.Comment setText:comment];
+                }
             }
             
         }else if ([item.Score_Type isEqualToString:@"2"])
@@ -648,8 +662,32 @@ long lTime = 0;
             [cell.stepValue setHidden:YES];
             [cell.Comment setHidden:NO];
             [cell.scoreSwitch setHidden:NO];
-            //cell.StarRate.maximumValue = item.item_detail_list.count;
             
+            [cell.Comment setText:@""];
+            [cell.FinalScore setText:@""];
+            
+            if (item.rating_value != nil)
+            {
+                
+                cell.FinalScore.text = item.Item_Score;
+                [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
+                [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
+                int nIndex = [item.rating_value intValue];
+                if (nIndex ==0)
+                {
+                    [cell.scoreSwitch setOn:NO];
+                }else
+                {
+                    [cell.scoreSwitch setOn:YES];
+                }
+                if (nIndex >=0)
+                {
+                    id temp =[item.item_detail_list objectAtIndex:nIndex];
+                    item.Item_Score = [temp objectForKey:@"MSIRD_Score"];
+                    NSString *comment = [[temp objectForKey:@"MSIRD_Item"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                    [cell.Comment setText:comment];
+                }
+            }
         }
         
         

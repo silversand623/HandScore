@@ -131,7 +131,7 @@ long lTime = 0;
 -(void)Beep
 {
     lTime++;
-    if (lTime > _nElapseTime)
+    if (lTime > _nElapseTime && _nElapseTime > 0)
     {
         [_myTimer invalidate];
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您设置的评分提醒时间已到，请尽快完成评分！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];

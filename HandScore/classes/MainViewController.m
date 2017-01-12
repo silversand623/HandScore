@@ -411,6 +411,7 @@
             break;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
 }
 
 /**

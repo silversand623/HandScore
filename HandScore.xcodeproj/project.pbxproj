@@ -235,6 +235,8 @@
 		3CAF4C241A1DD9A50030B7F5 /* Settings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Settings.m; sourceTree = "<group>"; };
 		3CAF4C251A1DD9A50030B7F5 /* Settings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Settings.xib; sourceTree = "<group>"; };
 		3CBA804319F7431B007B18E8 /* studentphoto.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = studentphoto.jpg; sourceTree = "<group>"; };
+		3CC24D351E2720D1008BDF73 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		3CC24D361E2720D1008BDF73 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		3CC4ACAC19483B70007C58D2 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		3CC4ACAE19483B97007C58D2 /* libiconv.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.2.dylib; path = usr/lib/libiconv.2.dylib; sourceTree = SDKROOT; };
 		3CE0DB2B1DF55ECE00935A22 /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
@@ -574,6 +576,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 			);
 			mainGroup = 3CAE4FC6191CD50800870909;
 			productRefGroup = 3CAE4FD0191CD50800870909 /* Products */;
@@ -748,6 +751,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3CAE4FDC191CD50800870909 /* en */,
+				3CC24D351E2720D1008BDF73 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -756,6 +760,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				3CAE4FF5191CD50800870909 /* en */,
+				3CC24D361E2720D1008BDF73 /* zh-Hans */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

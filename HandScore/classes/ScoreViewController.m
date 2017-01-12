@@ -637,6 +637,7 @@ long lTime = 0;
             cell.StarRate.maximumValue = item.item_detail_list.count;
             [cell.Comment setText:@""];
             [cell.FinalScore setText:@""];
+            [cell.StarRate setValue:0];
             
             if (item.rating_value != nil)
             {

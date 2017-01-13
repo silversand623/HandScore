@@ -34,6 +34,7 @@
     MBProgressHUD *HUD;
     BOOL bRefresh;
     NSInteger nTime;
+    BOOL bTimer;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -92,6 +93,7 @@
     [[NSRunLoop mainRunLoop] addTimer:_myTimer forMode:NSRunLoopCommonModes];
     bRefresh = true;
     [self checkNextStudent];
+    bTimer = false;
     
 }
 
@@ -311,10 +313,12 @@
                                           [self presentViewController:scoreViewController animated:YES completion:nil];
                                       } else if (tmInterval1 < 0.0)
                                       {
+                                          bTimer = true;
                                           UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"评分提示信息" message:@"当前学生还没有开始考试，请确认是否继续评分" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消",nil ] ;
                                           [alert show];
                                       } else if (tmInterval2 < 0.0)
                                       {
+                                          bTimer = false;
                                           UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"评分提示信息" message:@"当前学生考试时间已过,请确认是否继续评分" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消",nil ] ;
                                           [alert show];
                                       }
@@ -336,7 +340,10 @@
         TYAppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
         ScoreViewController *scoreViewController=[[ScoreViewController alloc]init];
         scoreViewController.loginItem = appDelegate.gLoginItem;
-        scoreViewController.nElapseTime = nTime;
+        if (bTimer)
+        {
+            scoreViewController.nElapseTime = nTime;
+        }
         [self presentViewController:scoreViewController animated:YES completion:nil];
         
     }

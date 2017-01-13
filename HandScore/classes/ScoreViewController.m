@@ -123,6 +123,7 @@ long lTime = 0;
     }
     
     _bZero = NO;
+    lTime = 0;
     
     _myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(Beep) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:_myTimer forMode:NSRunLoopCommonModes];
@@ -131,9 +132,10 @@ long lTime = 0;
 -(void)Beep
 {
     lTime++;
-    if (lTime > _nElapseTime && _nElapseTime > 0)
+    if (lTime > _nElapseTime && _nElapseTime!=0)
     {
         [_myTimer invalidate];
+        _myTimer = nil;
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"您设置的评分提醒时间已到，请尽快完成评分！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
         
@@ -144,6 +146,7 @@ long lTime = 0;
         AudioServicesPlaySystemSound(soundID);
         
         _nElapseTime = 0;
+        lTime = 0;
     }
     
 }
@@ -915,6 +918,11 @@ long lTime = 0;
     TYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     previewController.imgPath = appDelegate.gImgPath;
     appDelegate.gImgPath = nil;
+    
+    [_myTimer invalidate];
+    _myTimer = nil;
+    lTime = 0;
+    
     [self presentViewController:previewController animated:YES completion:nil];
     
 }
@@ -937,6 +945,9 @@ long lTime = 0;
         TYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
         appDelegate.gImgPath = nil;
         [self dismissViewControllerAnimated:YES completion:nil];
+        [_myTimer invalidate];
+        _myTimer = nil;
+        lTime = 0;
     }
 }
 

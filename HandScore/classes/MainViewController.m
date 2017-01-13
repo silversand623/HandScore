@@ -21,6 +21,7 @@
 #import "UIImageView+PINRemoteImage.h"
 #import "PINCache/PINCache.h"
 #import "FLAnimatedImage/FLAnimatedImageView.h"
+#import "Settings.h"
 
 #define PAGECOUNT @"1000"
 #define CUSTOMCELLID @"UMCell"
@@ -110,6 +111,16 @@
     StudentArray = [self getStudentArray:[self.filterSegment selectedSegmentIndex]];
     [self updateSegment];
     [[self tableView] reloadData];
+}
+
+/**
+ *  启动设置界面
+ *
+ *  @param sender 设置按钮
+ */
+- (IBAction)setSetings:(id)sender {
+    Settings *set = [[Settings alloc] init];
+    [self presentViewController:set animated:YES completion:nil];
 }
 
 /**

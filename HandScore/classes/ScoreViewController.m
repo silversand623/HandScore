@@ -666,6 +666,7 @@ long lTime = 0;
             
             [cell.Comment setText:@""];
             [cell.FinalScore setText:@""];
+            [cell.scoreSwitch setOn:NO];
             
             if (item.rating_value != nil)
             {

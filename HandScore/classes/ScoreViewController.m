@@ -163,9 +163,19 @@ long lTime = 0;
 
 -(void)getSum {
     float nSum = 0.0;
+    _bZero = NO;
     for (NSArray *obj in [_sheetItems objectAtIndex:0]) {
         for (MarkSheetItem *item in obj) {
             nSum += [item.Item_Score floatValue];
+            if (item.Item_Score != nil) {
+                if ([item.Score_Type isEqualToString:@"2"]) {
+                    id temp =[item.item_detail_list objectAtIndex:0];
+                    NSString *str1 = [temp objectForKey:@"MSIRD_Score"];
+                    if ([item.Item_Score isEqualToString:str1]) {
+                        _bZero = YES;
+                    }
+                }
+            }
         }
     }
     if (_bZero==YES)
@@ -245,7 +255,7 @@ long lTime = 0;
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.Comment setText:comment];
     if (nIndex == 0 && bScoreRule==NO) {
-        _bZero = YES;
+        
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"由于当前计分规则为选择No即视为不合格，用户得分将为0！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
     }
@@ -497,16 +507,7 @@ long lTime = 0;
     }
 }
 
-/*
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (_sections.count > 0) {
-        //return [_sections[nCount][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        return @"奥斯卡级打法是否可奥斯卡及地方撒了开发奥斯卡积分打算离开；发送了；卡刷卡福利大师傅就卡的身份案例看世界发达时刻就发生科技发生了开发了快速；剪发卡时间了垃圾收福利卡手机费爱上浪费的空间按时付款了大师及福利卡时间了；按时交付的绿卡手机发送看来就爱上离开；按时交付的考拉说法都是老会计法拉数据的发生了咖啡加大了说开发商可交付拉就是的罚款了手机费";
-    } else {
-        return @"";
-    }
-}
-*/
+
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     CGFloat height = 0;

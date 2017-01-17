@@ -611,7 +611,12 @@ int nIndex = 0;
             for (int n=0; n<children_list.count; n++) {
                 MarkSheetItem *markItem = (MarkSheetItem *)[self.sheetItems[nIndex][j] objectAtIndex:n];
                 NSMutableDictionary *childItem = [children_list objectAtIndex:n];
-                [childItem setValue:markItem.Item_Score forKey:@"Item_Score"];
+                if (markItem.Item_Score == nil) {
+                    [childItem setValue:@"0" forKey:@"Item_Score"];
+                }else
+                {
+                    [childItem setValue:markItem.Item_Score forKey:@"Item_Score"];
+                }
                 [childItem setValue:@"" forKey:@"MSIRD_ID"];
                 for (int k=0; k<markItem.item_detail_list.count; k++) {
                     id temp =[markItem.item_detail_list objectAtIndex:k];

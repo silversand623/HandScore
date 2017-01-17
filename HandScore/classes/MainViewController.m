@@ -102,6 +102,7 @@
 {
     if (StudentArray.count>0) {
         [self checkNextStudent];
+        //[self getStudentInfo];
     }
     
 }
@@ -247,6 +248,7 @@
                                           
                                           if (tmInterval1 >= 0.0 && tmInterval2 >= 0.0) {
                                               bTag = true;
+                                              _sNext=@"";
                                               
                                           } else if (tmInterval1 < 0.0)
                                           {

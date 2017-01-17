@@ -246,9 +246,8 @@ long lTime = 0;
     [cell.Comment setText:comment];
     if (nIndex == 0 && bScoreRule==NO) {
         _bZero = YES;
-    }else
-    {
-        _bZero = NO;
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"由于当前计分规则为选择No即视为不合格，用户得分将为0！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
     }
     [self getSum];
 }
@@ -895,16 +894,32 @@ long lTime = 0;
             }
         }
     }
-    
-    if (bValue) {
-        bScore = NO;
-        NSIndexPath *idxPath = [NSIndexPath indexPathForRow:nIndex inSection:nSection];//定位到第X行
-        [[self tableView] scrollToRowAtIndexPath:idxPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
-        [[self tableView] reloadData];
-        NSString *strMsg = [NSString stringWithFormat:@"还有%d项未打分，请完成打分再预览", nScoreCount];
-        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"有未完成打分项" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
-        return;
+    if (bScoreRule == NO)
+    {
+        if (!_bZero) {
+            if (bValue) {
+                bScore = NO;
+                NSIndexPath *idxPath = [NSIndexPath indexPathForRow:nIndex inSection:nSection];//定位到第X行
+                [[self tableView] scrollToRowAtIndexPath:idxPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+                [[self tableView] reloadData];
+                NSString *strMsg = [NSString stringWithFormat:@"还有%d项未打分，请完成打分再预览", nScoreCount];
+                UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"有未完成打分项" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+                [alert show];
+                return;
+            }
+        }
+    }else
+    {
+        if (bValue) {
+            bScore = NO;
+            NSIndexPath *idxPath = [NSIndexPath indexPathForRow:nIndex inSection:nSection];//定位到第X行
+            [[self tableView] scrollToRowAtIndexPath:idxPath atScrollPosition:UITableViewScrollPositionTop animated:NO];
+            [[self tableView] reloadData];
+            NSString *strMsg = [NSString stringWithFormat:@"还有%d项未打分，请完成打分再预览", nScoreCount];
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"有未完成打分项" message:strMsg delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+            return;
+        }
     }
     
     PreviewController *previewController=[[PreviewController alloc]init];

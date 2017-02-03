@@ -254,7 +254,11 @@ int nIndex = 0;
     
     
     if (_sheetItems.count > 0) {
-        return [self getLabelHeight:indexPath];
+        id obj = _sheetItems[nIndex][indexPath.section];
+        MarkSheetItem *item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
+        NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return [self getLabelHeight:content widthIs:520];
+        
     }
     
     
@@ -269,20 +273,48 @@ int nIndex = 0;
  *
  *  @return 返回标签高度
  */
--(CGFloat)getLabelHeight:(NSIndexPath *)indexPath {
-    // 列寬
-    CGFloat contentWidth = 520;
+-(CGFloat)getLabelHeight:(NSString *)content widthIs:(CGFloat)width {
     // 用何種字體進行顯示
     UIFont *font = [UIFont systemFontOfSize:20];
     
-    id obj = _sheetItems[nIndex][indexPath.section];
-    MarkSheetItem *item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
-    
-    // 該行要顯示的內容
-    NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     // 計算出顯示完內容需要的最小尺寸
-    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
+    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(width, 1000.0f) lineBreakMode:NSLineBreakByWordWrapping];
     return MAX(size.height, 40)+20;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    CGFloat height = 0;
+    NSString *content=@"";
+    if (_sections.count > 0)
+    {
+        content = [_sections[nIndex][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        height = [self getLabelHeight:content widthIs:1000];
+    }
+    UIView * v = [[UIView alloc] init];
+    v.frame = CGRectMake(0, 0, tableView.frame.size.width, height);
+    v.backgroundColor = [UIColor colorWithRed:245/255.0 green:245/255.0 blue:245/255.0 alpha:1.0];
+    
+    UILabel * label = [[UILabel alloc] init];
+    label.numberOfLines=0;
+    label.lineBreakMode=NSLineBreakByWordWrapping;
+    label.frame = CGRectMake(10, 0, tableView.frame.size.width, height);
+    label.text = content;
+    [label setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
+    label.font = [UIFont systemFontOfSize:20];
+    [v addSubview:label];
+    
+    
+    return v;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if (_sections.count > 0) {
+        
+        NSString *content = [_sections[nIndex][section] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        return [self getLabelHeight:content widthIs:1000];
+    }
+    return 23;
 }
 
 - (void)didReceiveMemoryWarning
@@ -338,7 +370,7 @@ int nIndex = 0;
         //resize the height of label
         NSString *content = [item.MSI_Item stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
         CGRect rect = cell.scoreContent.frame;
-        rect.size.height = [self getLabelHeight:indexPath];
+        rect.size.height = [self getLabelHeight:content widthIs:520];
         if (iOS8)
         {
             [cell.scoreContent setFrame:CGRectMake(20, 0, rect.size.width, rect.size.height)];
@@ -357,6 +389,7 @@ int nIndex = 0;
     
 }
 
+/*
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     // Background color
@@ -367,7 +400,8 @@ int nIndex = 0;
     [header.textLabel setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     
 }
-
+*/
+ 
 /**
  *  回退到考试评分界面
  *

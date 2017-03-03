@@ -22,13 +22,13 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bar_bg.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="bCG-3v-Szt">
                     <rect key="frame" x="0.0" y="0.0" width="1024" height="80"/>
                 </imageView>
-                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请选择打分模式(打分制，扣分制等)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkO-II-3SD">
-                    <rect key="frame" x="50" y="394" width="452" height="48"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请选择打分模式(打分制，扣分制等)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hkO-II-3SD">
+                    <rect key="frame" x="50" y="302" width="449" height="48"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="akl-sI-XKH">
-                    <rect key="frame" x="566" y="404" width="123" height="29"/>
+                    <rect key="frame" x="566" y="312" width="123" height="29"/>
                     <segments>
                         <segment title="打分制"/>
                         <segment title="扣分制"/>
@@ -36,7 +36,7 @@
                     <color key="tintColor" red="0.023529411760000001" green="0.4823529412" blue="0.6705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </segmentedControl>
                 <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="639" translatesAutoresizingMaskIntoConstraints="NO" id="yy7-VH-PAx">
-                    <rect key="frame" x="50" y="413" width="639" height="96"/>
+                    <rect key="frame" x="50" y="321" width="639" height="48"/>
                     <fontDescription key="fontDescription" type="system" pointSize="25"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -51,13 +51,13 @@
                         <action selector="saveSetting:" destination="-1" eventType="touchUpInside" id="bYd-TD-v4p"/>
                     </connections>
                 </button>
-                <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XVw-eN-N8G">
-                    <rect key="frame" x="566" y="304" width="97" height="30"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XVw-eN-N8G">
+                    <rect key="frame" x="566" y="223" width="97" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                 </textField>
-                <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请输入评分时使用的间隔分数(0.1-100)，默认为1" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" preferredMaxLayoutWidth="444" translatesAutoresizingMaskIntoConstraints="NO" id="lVX-oG-Xpc">
-                    <rect key="frame" x="50" y="266" width="444" height="97"/>
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请输入评分时使用的间隔分数(0.1-100)，默认为1" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" preferredMaxLayoutWidth="444" translatesAutoresizingMaskIntoConstraints="NO" id="lVX-oG-Xpc">
+                    <rect key="frame" x="50" y="214" width="444" height="48"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -74,12 +74,12 @@
                     </connections>
                 </button>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="w2z-jN-pjh">
-                    <rect key="frame" x="571" y="156" width="97" height="30"/>
+                    <rect key="frame" x="566" y="127" width="97" height="30"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                 </textField>
                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="请输入距离评分结束剩余时间提醒，默认1分钟" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" useAutomaticPreferredMaxLayoutWidth="YES" preferredMaxLayoutWidth="444" translatesAutoresizingMaskIntoConstraints="NO" id="JTb-Da-cub">
-                    <rect key="frame" x="55" y="118" width="444" height="97"/>
+                    <rect key="frame" x="50" y="118" width="444" height="48"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>

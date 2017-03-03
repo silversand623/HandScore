@@ -31,8 +31,8 @@
     // Do any additional setup after loading the view from its nib.
     NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
     NSString *sTime = [defaults objectForKey:@"Time"];
-    [defaults setObject:@"1" forKey:@"Step"];
-    [defaults setObject:@"0" forKey:@"Mode"];
+    //[defaults setObject:@"1" forKey:@"Step"];
+    //[defaults setObject:@"0" forKey:@"Mode"];
     
     
     NSString *sMode = [defaults objectForKey:@"Mode"];
@@ -46,15 +46,13 @@
         int nSelect = [sMode integerValue];
         [[self scoreMode] setSelectedSegmentIndex:nSelect];
     } else {
-        [[self scoreMode] setSelectedSegmentIndex:1];
+        [[self scoreMode] setSelectedSegmentIndex:0];
     }
-    //self.txtStep.delegate = self;
+    self.txtStep.delegate = self;
     
      
     self.txtTime.delegate = self;
     
-    [self.txtStep setHidden:YES];
-    [self.scoreMode setHidden:YES];
     
     if (sTime != nil) {
         [[self txtTime] setText:sTime];
@@ -112,12 +110,17 @@
     
     int nSelect = [[self scoreMode] selectedSegmentIndex];
     NSString *sMode = [NSString stringWithFormat:@"%d",nSelect];
-    if ([self isPureInt:sTime]) {
+    
+    if ([self isPureInt:sTime] &&([self isPureFloat:step] || [self isPureInt:step])) {
         
         if ([sTime intValue] < 1 || [sTime intValue] >= nInterval) {
             UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"输入范围错误" message:@"输入时间超出考试时间范围" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
             [alert show];
-        } else
+            
+        }else if ([step floatValue] == 0.0 || [step floatValue] > 100.0) {
+            UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"输入范围错误" message:@"请输入0.1-100范围内的数字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+            [alert show];
+        }else
         {
             [defaults setObject:sTime forKey:@"Time"];
             [defaults setObject:step forKey:@"Step"];
@@ -159,8 +162,56 @@
     return res;
 }
 
+-(BOOL)validateDecimal:(NSString*)number {
+    BOOL res =YES;
+    NSCharacterSet* tmpSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
+    int i =0;
+    while (i < number.length) {
+        NSString * string = [number substringWithRange:NSMakeRange(i,1)];
+        NSRange range = [string rangeOfCharacterFromSet:tmpSet];
+        if (range.length ==0) {
+            res =NO;
+            break;
+        }
+        i++;
+    }
+    return res;
+}
+
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+    
+    if (_txtStep == textField) {
+        
+        BOOL bTag = [self validateDecimal:string];
+        if (!bTag) {
+            return bTag;
+        }
+        
+        NSMutableString * futureString = [NSMutableString stringWithString:textField.text];
+        
+        [futureString  insertString:string atIndex:range.location];
+        
+        NSInteger flag=0;
+        
+        const NSInteger limited = 1;//小数点后需要限制的个数
+        
+        for (int i = futureString.length-1; i>=0; i--) {
+            
+            if ([futureString characterAtIndex:i] == '.') {
+                
+                if (flag > limited) {
+                    
+                    return NO;
+                }
+                
+                
+                break;
+            }
+            flag++;
+        }
+    }
     
     //如果是限制只能输入数字的文本框
     if (_txtTime==textField) {

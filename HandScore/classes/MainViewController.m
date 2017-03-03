@@ -102,7 +102,7 @@
 {
     if (StudentArray.count>0) {
         [self checkNextStudent];
-        //[self getStudentInfo];
+        [self checkStudentTime];
     }
     
 }
@@ -197,6 +197,89 @@
                               [alert show];                          }
                           
                       }];
+}
+
+/**
+ *  获取学生信息
+ */
+-(void) checkStudentTime
+{
+    NSUserDefaults *defaults =[NSUserDefaults standardUserDefaults];
+    NSMutableDictionary *params=[[NSMutableDictionary alloc] init];
+    
+    int count = FilterStudentArray.count;
+    if (count < 1) {
+        return;
+    }
+    Student *info = (Student *)[FilterStudentArray objectAtIndex:count-1];
+    
+    
+    [params setObject:loginItem.E_ID forKey:@"E_ID"];
+    [params setObject:loginItem.ES_ID forKey:@"ES_ID"];
+    [params setObject:loginItem.Room_ID forKey:@"Room_ID"];
+    [params setObject:loginItem.U_ID forKey:@"U_ID"];
+    [params setObject:@"1" forKey:@"search_type"];
+    [params setObject:info.EStu_ExamNumber forKey:@"search_keyword"];
+    [params setObject:@"1" forKey:@"page_index"];
+    [params setObject:PAGECOUNT forKey:@"page_size"];
+    
+    NSString *BaseUrl=[defaults objectForKey:@"IPConfig"];
+    NSString *url=@"http://";
+    url=[url stringByAppendingString:BaseUrl];
+    url=[url stringByAppendingFormat:@"%@",@"/AppDataInterface/HandScore.aspx/SearchStudentInfo"];
+    NSURL *TempUrl = [NSURL URLWithString:url];
+    
+    [WTRequestCenter postWithoutCacheURL:TempUrl
+                              parameters:params completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                                  if (!error) {
+                                      NSError *jsonError = nil;
+                                      [HUD hide:YES];
+                                      id obj = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&jsonError];
+                                      id objList = [obj objectForKey:@"student_list"];
+                                      if (!jsonError) {
+                                          ///
+                                          NSString *str = [obj objectForKey:@"result"];
+                                          if (str != nil) {
+                                              int nRestult = [self dealError:str];
+                                              if (nRestult == Success) {
+                                                  NSMutableArray* logInfo = [RMMapper mutableArrayOfClass:[Student class]
+                                                                                    fromArrayOfDictionary:objList];
+                                                  
+                                                  NSString *suid=NULL;
+                                                  NSString *stime=NULL;
+                                                  for (int i=0;i<logInfo.count;i++){
+                                                      Student *info = (Student *)[logInfo objectAtIndex:i];
+                                                      suid = info.U_ID;
+                                                      stime = info.Exam_StartTime;
+                                                  }
+                                                  
+                                                  BOOL bTag = NO;
+                                                  for (int i = 0;i<FilterStudentArray.count;i++)
+                                                  {
+                                                      Student *info = (Student *)[FilterStudentArray objectAtIndex:i];
+                                                      if ([suid isEqualToString:info.U_ID])
+                                                      {
+                                                          if (![stime isEqualToString:info.Exam_StartTime]) {
+                                                              bTag = YES;
+                                                          }
+                                                          break;
+                                                      }
+                                                  }
+                                                  
+                                                  if (bTag) {
+                                                      [FilterStudentArray removeAllObjects];
+                                                      [StudentArray removeAllObjects];
+                                                      [self getStudentInfo];
+                                                  }
+                                              }
+                                              
+                                          }
+                                          ////
+                                      }
+                                      
+                                  }
+                                  
+                              }];
 }
 
 -(void) checkNextStudent

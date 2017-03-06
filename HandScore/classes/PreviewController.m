@@ -120,8 +120,8 @@ int nIndex = 0;
         
     }
     
-    [[self TotalSum] setText:[NSString stringWithFormat:@"%0.1f", [self getTotalSum]]];
-    [[self actureScore] setText:[NSString stringWithFormat:@"%0.1f", [self getSum]]];
+    [[self TotalSum] setText:[NSString stringWithFormat:@"%0.2f", [self getTotalSum]]];
+    [[self actureScore] setText:[NSString stringWithFormat:@"%0.2f", [self getSum]]];
     
 }
 
@@ -224,8 +224,8 @@ int nIndex = 0;
                                                   nIndex = 0;
                                                   [self getScoreImage];
                                                   
-                                                  [[self TotalSum] setText:[NSString stringWithFormat:@"%0.1f", [self getTotalSum]]];
-                                                  [[self actureScore] setText:[NSString stringWithFormat:@"%0.1f", [self getSum]]];
+                                                  [[self TotalSum] setText:[NSString stringWithFormat:@"%0.2f", [self getTotalSum]]];
+                                                  [[self actureScore] setText:[NSString stringWithFormat:@"%0.2f", [self getSum]]];
 
                                                   [[self tableView] reloadData];
                                                   
@@ -478,7 +478,7 @@ int nIndex = 0;
     [params setObject:info.Room_ID forKey:@"Room_ID"];
     [params setObject:appDelegate.gStudentId forKey:@"Student_ID"];
     [params setObject:info.U_ID forKey:@"Rater_ID"];
-    [params setObject:[NSString stringWithFormat:@"%0.1f",nSum] forKey:@"SI_Score"];//因为数据库字段未int
+    [params setObject:[NSString stringWithFormat:@"%0.2f",nSum] forKey:@"SI_Score"];//因为数据库字段未int
     [params setObject:[self.markSheets objectAtIndex:0] forKey:@"SI_Item"];
     [params setObject:self.markSheetId forKey:@"MS_ID"];
     [params setObject:info.EU_ID forKey:@"EU_ID"];
@@ -520,7 +520,7 @@ int nIndex = 0;
                                                   for (Student *obj in appDelegate.gStudnetArray) {
                                                       if ([obj.U_ID isEqualToString:appDelegate.gStudentId]) {
                                                           obj.student_state = [NSString stringWithFormat: @"%d", HaveScored];
-                                                          obj.student_score = [NSString stringWithFormat: @"%0.1f", nSum];
+                                                          obj.student_score = [NSString stringWithFormat: @"%0.2f", nSum];
                                                           break;
                                                       }
                                                   }
@@ -597,7 +597,7 @@ int nIndex = 0;
  *  @return 返回累加成绩分数
  */
 -(float)getSum {
-    float nSum = 0.0;
+    float nSum = 0.00;
     for (NSArray *obj in [_sheetItems objectAtIndex:nIndex]) {
         for (MarkSheetItem *item in obj) {
             nSum += [item.Item_Score floatValue];
@@ -605,7 +605,7 @@ int nIndex = 0;
     }
     if (_bZero==YES)
     {
-        nSum = 0.0;
+        nSum = 0.00;
     }
     return nSum;
 }
@@ -616,7 +616,7 @@ int nIndex = 0;
  *  @return 返回总分数
  */
 -(float)getTotalSum {
-    float nSum = 0.0;
+    float nSum = 0.00;
     for (NSArray *obj in [_sheetItems objectAtIndex:nIndex]) {
         for (MarkSheetItem *item in obj) {
             nSum += [item.MSI_Score floatValue];

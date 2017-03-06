@@ -158,7 +158,7 @@ long lTime = 0;
             nSum += [item.MSI_Score floatValue];
         }
     }
-    [_Total setText:[NSString stringWithFormat:@"%.f", nSum]];
+    [_Total setText:[NSString stringWithFormat:@"%.2f", nSum]];
 }
 
 -(void)getSum {
@@ -182,7 +182,7 @@ long lTime = 0;
     {
         nSum = 0.0;
     }
-    [_Actual setText:[NSString stringWithFormat:@"%.f", nSum]];
+    [_Actual setText:[NSString stringWithFormat:@"%.2f", nSum]];
 }
 
 /**

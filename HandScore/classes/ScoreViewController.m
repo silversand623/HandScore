@@ -173,12 +173,13 @@ long lTime = 0;
                     NSString *str1 = [temp objectForKey:@"MSIRD_Score"];
                     if ([item.Item_Score isEqualToString:str1]) {
                         _bZero = YES;
+                        break;
                     }
                 }
             }
         }
     }
-    if (_bZero==YES)
+    if (_bZero==YES && bScoreRule==NO)
     {
         nSum = 0.0;
     }
@@ -568,6 +569,7 @@ long lTime = 0;
     if (_sheetItems.count > 0) {
         id obj = _sheetItems[nCount][indexPath.section];
         item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
+        [self getSum];
         //
         
         

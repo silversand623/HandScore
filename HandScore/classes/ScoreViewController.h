@@ -47,6 +47,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *Actual;
 @property BOOL bZero;
+@property BOOL bScoreRule;
 - (IBAction)showInfo:(id)sender;
 
 typedef enum

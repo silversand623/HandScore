@@ -83,6 +83,7 @@ int nIndex = 0;
             [self.signButton setTitle:@"" forState:UIControlStateNormal];
         }
         [[self MarkSheetName] setText:_markSheets[0]];
+        [[self actureScore] setText:_sActualScore];
         
     } else {
         nIndex = 0;
@@ -106,6 +107,7 @@ int nIndex = 0;
                 }
                 [[self MarkSheetName] setText:[obj objectAtIndex:4]];
                 bValue = YES;
+                
                 break;
             }
         }
@@ -121,7 +123,7 @@ int nIndex = 0;
     }
     
     [[self TotalSum] setText:[NSString stringWithFormat:@"%0.2f", [self getTotalSum]]];
-    [[self actureScore] setText:[NSString stringWithFormat:@"%0.2f", [self getSum]]];
+    
     
 }
 
@@ -198,6 +200,7 @@ int nIndex = 0;
                                                   _sheetItems = [[NSMutableArray alloc] init];
                                                   [self.sheetItems addObject:[NSMutableArray array]];
                                                   [self.sections addObject:[NSMutableArray array]];
+                                                  _sActualScore = [obj objectForKey:@"SI_Score"];
                                                   _scoreID = [obj objectForKey:@"SI_ID"];
                                                   NSArray *mark_sheet_items = [obj objectForKey:@"item_score_list"];
                                                   for (int j=0; j<mark_sheet_items.count; j++) {
@@ -225,7 +228,7 @@ int nIndex = 0;
                                                   [self getScoreImage];
                                                   
                                                   [[self TotalSum] setText:[NSString stringWithFormat:@"%0.2f", [self getTotalSum]]];
-                                                  [[self actureScore] setText:[NSString stringWithFormat:@"%0.2f", [self getSum]]];
+                                                  [[self actureScore] setText:_sActualScore];
 
                                                   [[self tableView] reloadData];
                                                   
@@ -379,7 +382,9 @@ int nIndex = 0;
         }
         [cell.scoreContent setText:content];
         //
-
+        if (item.Item_Score == nil) {
+            item.Item_Score =@"0.00";
+        }
         cell.scoreValue.text = item.Item_Score;
     }
     
@@ -469,7 +474,8 @@ int nIndex = 0;
     if (strJson == nil) {
         return;
     }
-    float nSum = [self getSum];
+    //float nSum = [self getSum];
+    float nSum = _sActualScore.doubleValue;
     
     TYAppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
     LoginInfoType *info = appDelegate.gLoginItem;
@@ -516,7 +522,8 @@ int nIndex = 0;
                                                   [appDelegate.gStudentScores addObject:temp];
                                                   
                                                   //modify student state
-                                                  float nSum = [self getSum];
+                                                  //float nSum = [self getSum];
+                                                  float nSum = _sActualScore.doubleValue;
                                                   for (Student *obj in appDelegate.gStudnetArray) {
                                                       if ([obj.U_ID isEqualToString:appDelegate.gStudentId]) {
                                                           obj.student_state = [NSString stringWithFormat: @"%d", HaveScored];

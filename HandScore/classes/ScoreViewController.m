@@ -40,7 +40,7 @@ int nCount = 0;
 bool bScore = YES;
 double dStep = 1.0;
 int nMode = 0;
-bool bScoreRule = NO;
+
 long lTime = 0;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -63,6 +63,8 @@ long lTime = 0;
     [[self tableView] registerNib:nib forCellReuseIdentifier:SCORECELLID];
     
     [self.btnShowInfo setHidden:YES];
+    
+    _bScoreRule = NO;
     
     bScore = YES;
     self.tableView.rowHeight = 60;
@@ -179,7 +181,7 @@ long lTime = 0;
             }
         }
     }
-    if (_bZero==YES && bScoreRule==NO)
+    if (_bZero==YES && _bScoreRule==NO)
     {
         nSum = 0.0;
     }
@@ -255,7 +257,7 @@ long lTime = 0;
     [cell.FinalScore setText:item.Item_Score];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.Comment setText:comment];
-    if (nIndex == 0 && bScoreRule==NO) {
+    if (nIndex == 0 && _bScoreRule==NO) {
         
         UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"提示" message:@"由于当前计分规则为选择No即视为不合格，用户得分将为0！" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
@@ -370,7 +372,7 @@ long lTime = 0;
                                                       [self.markSheets addObject:[[dicList objectForKey:@"MS_Name"]stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
                                                       if ([[dicList objectForKey:@"MarkSheetNumber2"] isEqualToString:@"0"])
                                                       {
-                                                          bScoreRule = YES;//成绩累计
+                                                          _bScoreRule = YES;//成绩累计
                                                       }
                                                       NSArray *mark_sheet_items = [dicList objectForKey:@"item_list"];
                                                       for (int j=0; j<mark_sheet_items.count; j++) {
@@ -904,7 +906,7 @@ long lTime = 0;
             }
         }
     }
-    if (bScoreRule == NO)
+    if (_bScoreRule == NO)
     {
         if (!_bZero) {
             if (bValue) {
@@ -940,6 +942,7 @@ long lTime = 0;
     previewController.dataMarkSheet = [NSMutableDictionary dictionaryWithDictionary:self.dataMarkSheet];
     previewController.nTag = 1;
     previewController.bZero = _bZero;
+    previewController.sActualScore = _Actual.text;
     TYAppDelegate *appDelegate = [[UIApplication sharedApplication] delegate];
     previewController.imgPath = appDelegate.gImgPath;
     appDelegate.gImgPath = nil;

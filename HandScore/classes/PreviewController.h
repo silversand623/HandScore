@@ -37,4 +37,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *TotalSum;
 @property (weak, nonatomic) IBOutlet UILabel *actureScore;
 @property BOOL bZero;
+@property(nonatomic,retain) NSString *sActualScore;//实际成绩
 @end

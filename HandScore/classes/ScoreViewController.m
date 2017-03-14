@@ -415,6 +415,8 @@ long lTime = 0;
                                                   
                                                   [self getTotalSum];
                                                   
+                                                  [self getSum];
+                                                  
                                                   ////
                                               }
                                           }
@@ -778,18 +780,17 @@ long lTime = 0;
         value = 0.0f;
     }else
     {
-        nValue= floorf((value*score)/stepValue);
+        nValue= fabs(round((value*score)/stepValue));
     }
     [sender setValue:value];
     
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", floorf(nValue)*stepValue]];
     cell.stepValue.value = nValue;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     item.rating_value = [NSString stringWithFormat:@"%.2f", sender.value];
-    item.Item_Score = [NSString stringWithFormat:@"%.2f", floorf(nValue)*stepValue];
+    item.Item_Score = [NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)];
     item.step_value = [NSString stringWithFormat:@"%.f", nValue];
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", floorf(nValue)*stepValue]];
+    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)]];
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
@@ -815,16 +816,15 @@ long lTime = 0;
         [sender setValue:value];
     }else
     {
-        nValue= floorf((value*score)/stepValue);
+        nValue= ceil((value*score)/stepValue);
     }
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", floorf(nValue)*stepValue]];
     cell.stepValue.value = nValue;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     item.rating_value = [NSString stringWithFormat:@"%.2f", sender.value];
-    item.Item_Score = [NSString stringWithFormat:@"%.2f", floorf(nValue)*stepValue];
+    item.Item_Score = [NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)];
     item.step_value = [NSString stringWithFormat:@"%.f", nValue];
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", floorf(nValue)*stepValue]];
+    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)]];
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
@@ -851,9 +851,9 @@ long lTime = 0;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     item.rating_value = [NSString stringWithFormat:@"%.2f", cell.Rating.value];
-    item.Item_Score = [NSString stringWithFormat:@"%.2f", sender.value*stepValue];
+    item.Item_Score = [NSString stringWithFormat:@"%.2f", round(sender.value*stepValue)];
     item.step_value = [NSString stringWithFormat:@"%.f", sender.value];
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", sender.value*stepValue]];
+    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", round(sender.value*stepValue)]];
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];

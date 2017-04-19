@@ -573,9 +573,15 @@ long lTime = 0;
     if (_sheetItems.count > 0) {
         id obj = _sheetItems[nCount][indexPath.section];
         item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
+        
         [self getSum];
         //
         
+        NSLog(@"indexPath.section is %d",indexPath.section);
+        
+        NSLog(@"indexPath.row is %d",indexPath.row);
+        
+        NSLog(@"item is %@",item.rating_value);
         
         cell.ScoreValue.text = item.MSI_Score;
         
@@ -653,10 +659,11 @@ long lTime = 0;
             cell.StarRate.maximumValue = item.item_detail_list.count;
             [cell.Comment setText:@""];
             [cell.FinalScore setText:@""];
-            [cell.StarRate setValue:0];
+            cell.StarRate.value = -1;
             
             if (item.rating_value != nil)
             {
+                NSLog(@"item2222 is %@",item.rating_value);
                 cell.StarRate.value = [item.rating_value floatValue];
                 cell.FinalScore.text = item.Item_Score;
                 [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
@@ -750,7 +757,7 @@ long lTime = 0;
     {
         nIndex = 1;
     }
-    [sender setValue:1];
+    [sender setValue:nIndex];
     item.rating_value = [NSString stringWithFormat:@"%d", nIndex];
     id temp =[item.item_detail_list objectAtIndex:nIndex-1];
     item.Item_Score = [temp objectForKey:@"MSIRD_Score"];
@@ -795,9 +802,9 @@ long lTime = 0;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     item.rating_value = [NSString stringWithFormat:@"%.2f", sender.value];
-    item.Item_Score = [NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)];
+    item.Item_Score = [NSString stringWithFormat:@"%.2f", MIN((nValue*stepValue),score)];
     item.step_value = [NSString stringWithFormat:@"%.f", nValue];
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)]];
+    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", MIN((nValue*stepValue),score)]];
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
@@ -829,9 +836,9 @@ long lTime = 0;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     item.rating_value = [NSString stringWithFormat:@"%.2f", sender.value];
-    item.Item_Score = [NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)];
+    item.Item_Score = [NSString stringWithFormat:@"%.2f", MIN((nValue*stepValue),score)];
     item.step_value = [NSString stringWithFormat:@"%.f", nValue];
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", MIN(round(nValue*stepValue),score)]];
+    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", MIN((nValue*stepValue),score)]];
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];
@@ -858,9 +865,9 @@ long lTime = 0;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     item.rating_value = [NSString stringWithFormat:@"%.2f", cell.Rating.value];
-    item.Item_Score = [NSString stringWithFormat:@"%.2f", round(sender.value*stepValue)];
+    item.Item_Score = [NSString stringWithFormat:@"%.2f", (sender.value*stepValue)];
     item.step_value = [NSString stringWithFormat:@"%.f", sender.value];
-    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", round(sender.value*stepValue)]];
+    [cell.FinalScore setText:[NSString stringWithFormat:@"%.2f", (sender.value*stepValue)]];
     //[cell.FinalScore setTextColor:[UIColor blueColor]];
     [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
     [cell.FinalScore setFont:[UIFont systemFontOfSize:25.0]];

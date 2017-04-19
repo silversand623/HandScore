@@ -573,9 +573,15 @@ long lTime = 0;
     if (_sheetItems.count > 0) {
         id obj = _sheetItems[nCount][indexPath.section];
         item = (MarkSheetItem*) [obj objectAtIndex:indexPath.row];
+        
         [self getSum];
         //
         
+        NSLog(@"indexPath.section is %d",indexPath.section);
+        
+        NSLog(@"indexPath.row is %d",indexPath.row);
+        
+        NSLog(@"item is %@",item.rating_value);
         
         cell.ScoreValue.text = item.MSI_Score;
         
@@ -653,10 +659,11 @@ long lTime = 0;
             cell.StarRate.maximumValue = item.item_detail_list.count;
             [cell.Comment setText:@""];
             [cell.FinalScore setText:@""];
-            [cell.StarRate setValue:0];
+            cell.StarRate.value = -1;
             
             if (item.rating_value != nil)
             {
+                NSLog(@"item2222 is %@",item.rating_value);
                 cell.StarRate.value = [item.rating_value floatValue];
                 cell.FinalScore.text = item.Item_Score;
                 [cell.FinalScore setTextColor:[TYAppDelegate colorWithHexString:@"067BAB"]];
@@ -746,9 +753,10 @@ long lTime = 0;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     int nIndex = (int)sender.value;
-    if (nIndex < 1)
+    if (nIndex < 0)
     {
-        nIndex = 1;
+        //nIndex = 1;
+        return;
     }
     item.rating_value = [NSString stringWithFormat:@"%d", nIndex];
     id temp =[item.item_detail_list objectAtIndex:nIndex-1];

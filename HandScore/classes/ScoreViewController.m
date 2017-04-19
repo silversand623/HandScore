@@ -746,6 +746,11 @@ long lTime = 0;
     NSIndexPath *path = [self.tableView indexPathForCell:cell];
     MarkSheetItem *item = (MarkSheetItem*) [_sheetItems[nCount][path.section] objectAtIndex:path.row];
     int nIndex = (int)sender.value;
+    if (nIndex < 1)
+    {
+        nIndex = 1;
+    }
+    [sender setValue:1];
     item.rating_value = [NSString stringWithFormat:@"%d", nIndex];
     id temp =[item.item_detail_list objectAtIndex:nIndex-1];
     item.Item_Score = [temp objectForKey:@"MSIRD_Score"];

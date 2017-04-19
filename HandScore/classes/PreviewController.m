@@ -77,11 +77,6 @@ int nIndex = 0;
     BOOL bValue = NO;
     if ([self nTag] == 1) {
         nIndex = [[self sIndex] integerValue];
-        if (_imgPath != nil) {
-            UIImage *bgImage = [[UIImage alloc]initWithContentsOfFile:[self imgPath]];
-            [self.signButton setBackgroundImage:bgImage forState:UIControlStateNormal];
-            [self.signButton setTitle:@"" forState:UIControlStateNormal];
-        }
         [[self MarkSheetName] setText:_markSheets[0]];
         [[self actureScore] setText:_sActualScore];
         
@@ -107,7 +102,7 @@ int nIndex = 0;
                 }
                 [[self MarkSheetName] setText:[obj objectAtIndex:4]];
                 bValue = YES;
-                
+                [[self actureScore] setText:_sActualScore];
                 break;
             }
         }

@@ -499,6 +499,7 @@
             
             PreviewController *previewController=[[PreviewController alloc]init];
             previewController.nTag = 2;
+            previewController.sActualScore = Info.student_score;
             [self presentViewController:previewController animated:YES completion:nil];
             break;
         }
@@ -888,6 +889,7 @@
             
             PreviewController *previewController=[[PreviewController alloc]init];
             previewController.nTag = 2;
+            previewController.sActualScore = Info.student_score;
             [self presentViewController:previewController animated:YES completion:nil];
             break;
         }
